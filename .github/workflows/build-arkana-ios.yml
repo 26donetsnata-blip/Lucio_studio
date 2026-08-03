@@ -21,6 +21,7 @@ jobs:
         run: |
           xcodebuild -version
           xcrun simctl list devicetypes | grep -i iphone || true
+          xcrun simctl list devices available | grep -i iphone || true
 
       - name: Install XcodeGen
         run: brew install xcodegen
@@ -29,9 +30,22 @@ jobs:
         run: xcodegen generate
 
       - name: Build for iOS Simulator
+        id: build
+        continue-on-error: true
         run: |
+          set -o pipefail
           xcodebuild build \
             -project TarotNumerology.xcodeproj \
             -scheme TarotNumerology \
             -destination 'platform=iOS Simulator,name=iPhone 15' \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO 2>&1 | tee build.log
+
+      - name: Surface failure as annotations
+        if: steps.build.outcome == 'failure'
+        run: |
+          echo "::error::xcodebuild failed, tail of build.log follows"
+          tail -n 80 build.log | while IFS= read -r line; do
+            safe=$(echo "$line" | sed 's/%/percent/g')
+            echo "::error::${safe:0:250}"
+          done
+          exit 1
