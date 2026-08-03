@@ -20,18 +20,37 @@ jobs:
       - name: Diagnostics
         run: |
           echo "::notice::$(xcodebuild -version | tr '\n' ' ')"
-          echo "::notice::SDKs: $(xcodebuild -showsdks | grep -i simulator | tr '\n' ' | ')"
-
-      - name: Accept Xcode license and run first launch
-        run: |
-          sudo xcodebuild -license accept || echo "::warning::license accept failed"
-          sudo xcodebuild -runFirstLaunch || echo "::warning::runFirstLaunch failed"
+          df -h / | tail -1 | xargs -I{} echo "::notice::disk: {}"
 
       - name: Install XcodeGen
         run: brew install xcodegen
 
       - name: Generate Xcode project
         run: xcodegen generate
+
+      - name: List schemes (quick, should not need a real build)
+        id: list
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          xcodebuild -list -project TarotNumerology.xcodeproj 2>&1 | tee list.log
+          echo "exit=$?"
+
+      - name: Surface list failure
+        if: steps.list.outcome == 'failure'
+        run: |
+          while IFS= read -r line; do
+            safe=$(echo "$line" | sed 's/%/percent/g')
+            echo "::error::LIST: ${safe:0:250}"
+          done < list.log
+          exit 1
+
+      - name: Surface list output always
+        run: |
+          while IFS= read -r line; do
+            safe=$(echo "$line" | sed 's/%/percent/g')
+            echo "::notice::LIST-OK: ${safe:0:250}"
+          done < list.log
 
       - name: Build for iOS Simulator SDK
         id: build
@@ -42,13 +61,15 @@ jobs:
             -project TarotNumerology.xcodeproj \
             -scheme TarotNumerology \
             -sdk iphonesimulator \
-            CODE_SIGNING_ALLOWED=NO 2>&1 | tee build.log
+            CODE_SIGNING_ALLOWED=NO -verbose 2>&1 | tee build.log
+          echo "build exit=$?"
+          echo "line count: $(wc -l < build.log)"
 
       - name: Surface failure as annotations
         if: steps.build.outcome == 'failure'
         run: |
-          echo "::error::xcodebuild failed (sdk=iphonesimulator), tail of build.log follows"
-          tail -n 100 build.log | while IFS= read -r line; do
+          echo "::error::xcodebuild failed, line count: $(wc -l < build.log)"
+          tail -n 120 build.log | while IFS= read -r line; do
             safe=$(echo "$line" | sed 's/%/percent/g')
             echo "::error::${safe:0:250}"
           done
