@@ -17,40 +17,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Diagnostics
+      - name: Select newest available Xcode
         run: |
-          echo "::notice::$(xcodebuild -version | tr '\n' ' ')"
-          df -h / | tail -1 | xargs -I{} echo "::notice::disk: {}"
+          echo "::notice::Available: $(ls /Applications | grep -i '^Xcode' | tr '\n' ' ')"
+          LATEST=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$LATEST" ]; then LATEST=/Applications/Xcode.app; fi
+          echo "::notice::Selecting $LATEST"
+          sudo xcode-select -s "$LATEST"
+          xcodebuild -version
 
       - name: Install XcodeGen
         run: brew install xcodegen
 
       - name: Generate Xcode project
         run: xcodegen generate
-
-      - name: List schemes (quick, should not need a real build)
-        id: list
-        continue-on-error: true
-        run: |
-          set -o pipefail
-          xcodebuild -list -project TarotNumerology.xcodeproj 2>&1 | tee list.log
-          echo "exit=$?"
-
-      - name: Surface list failure
-        if: steps.list.outcome == 'failure'
-        run: |
-          while IFS= read -r line; do
-            safe=$(echo "$line" | sed 's/%/percent/g')
-            echo "::error::LIST: ${safe:0:250}"
-          done < list.log
-          exit 1
-
-      - name: Surface list output always
-        run: |
-          while IFS= read -r line; do
-            safe=$(echo "$line" | sed 's/%/percent/g')
-            echo "::notice::LIST-OK: ${safe:0:250}"
-          done < list.log
 
       - name: Build for iOS Simulator SDK
         id: build
@@ -61,15 +41,13 @@ jobs:
             -project TarotNumerology.xcodeproj \
             -scheme TarotNumerology \
             -sdk iphonesimulator \
-            CODE_SIGNING_ALLOWED=NO -verbose 2>&1 | tee build.log
-          echo "build exit=$?"
-          echo "line count: $(wc -l < build.log)"
+            CODE_SIGNING_ALLOWED=NO 2>&1 | tee build.log
 
       - name: Surface failure as annotations
         if: steps.build.outcome == 'failure'
         run: |
           echo "::error::xcodebuild failed, line count: $(wc -l < build.log)"
-          tail -n 120 build.log | while IFS= read -r line; do
+          tail -n 150 build.log | while IFS= read -r line; do
             safe=$(echo "$line" | sed 's/%/percent/g')
             echo "::error::${safe:0:250}"
           done
