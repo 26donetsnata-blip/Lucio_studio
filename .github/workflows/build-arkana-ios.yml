@@ -22,6 +22,11 @@ jobs:
           echo "::notice::$(xcodebuild -version | tr '\n' ' ')"
           echo "::notice::SDKs: $(xcodebuild -showsdks | grep -i simulator | tr '\n' ' | ')"
 
+      - name: Accept Xcode license and run first launch
+        run: |
+          sudo xcodebuild -license accept || echo "::warning::license accept failed"
+          sudo xcodebuild -runFirstLaunch || echo "::warning::runFirstLaunch failed"
+
       - name: Install XcodeGen
         run: brew install xcodegen
 
