@@ -1,0 +1,5 @@
+.DS_Store
+TarotNumerology/TarotNumerology.xcodeproj/
+TarotNumerology/.build/
+TarotNumerology/DerivedData/
+**/xcuserdata/

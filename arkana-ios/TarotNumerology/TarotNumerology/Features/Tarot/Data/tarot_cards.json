@@ -1,0 +1,1016 @@
+[
+  {
+    "id": "major-00-shut",
+    "name": "Шут",
+    "arcana": "major",
+    "suit": null,
+    "number": 0,
+    "interpretations": {
+      "classic": {
+        "upright": "Начало пути, спонтанность, готовность рискнуть без гарантий",
+        "reversed": "Безрассудство, риск без оглядки, страх сделать первый шаг"
+      }
+    }
+  },
+  {
+    "id": "major-01-mag",
+    "name": "Маг",
+    "arcana": "major",
+    "suit": null,
+    "number": 1,
+    "interpretations": {
+      "classic": {
+        "upright": "Ресурсы уже есть, время действовать и заявить о себе",
+        "reversed": "Разбросанность, манипуляция, нереализованный потенциал"
+      }
+    }
+  },
+  {
+    "id": "major-02-verhovnaya-zhritsa",
+    "name": "Верховная Жрица",
+    "arcana": "major",
+    "suit": null,
+    "number": 2,
+    "interpretations": {
+      "classic": {
+        "upright": "Интуиция важнее логики, тайна ещё не раскрыта",
+        "reversed": "Игнорирование внутреннего голоса, скрытая информация вскрывается некстати"
+      }
+    }
+  },
+  {
+    "id": "major-03-imperatritsa",
+    "name": "Императрица",
+    "arcana": "major",
+    "suit": null,
+    "number": 3,
+    "interpretations": {
+      "classic": {
+        "upright": "Изобилие, забота, творческий и телесный расцвет",
+        "reversed": "Застой в творчестве, гиперопека, зависимость от чужой заботы"
+      }
+    }
+  },
+  {
+    "id": "major-04-imperator",
+    "name": "Император",
+    "arcana": "major",
+    "suit": null,
+    "number": 4,
+    "interpretations": {
+      "classic": {
+        "upright": "Порядок, контроль, твёрдые границы и структура",
+        "reversed": "Жёсткость, давление, потеря контроля через избыток жёсткости"
+      }
+    }
+  },
+  {
+    "id": "major-05-ierofant",
+    "name": "Иерофант",
+    "arcana": "major",
+    "suit": null,
+    "number": 5,
+    "interpretations": {
+      "classic": {
+        "upright": "Традиция, обучение, следование правилам или наставнику",
+        "reversed": "Бунт против системы, устаревшие догмы, свой путь вместо чужих правил"
+      }
+    }
+  },
+  {
+    "id": "major-06-vlyublennye",
+    "name": "Влюблённые",
+    "arcana": "major",
+    "suit": null,
+    "number": 6,
+    "interpretations": {
+      "classic": {
+        "upright": "Выбор по велению сердца, союз, гармония ценностей",
+        "reversed": "Разлад, неверный выбор, конфликт ценностей в паре"
+      }
+    }
+  },
+  {
+    "id": "major-07-kolesnitsa",
+    "name": "Колесница",
+    "arcana": "major",
+    "suit": null,
+    "number": 7,
+    "interpretations": {
+      "classic": {
+        "upright": "Победа через волю, движение вперёд несмотря на препятствия",
+        "reversed": "Потеря направления, разбросанные силы, буксующее движение"
+      }
+    }
+  },
+  {
+    "id": "major-08-sila",
+    "name": "Сила",
+    "arcana": "major",
+    "suit": null,
+    "number": 8,
+    "interpretations": {
+      "classic": {
+        "upright": "Мягкая власть, укрощение страха через терпение, а не давление",
+        "reversed": "Неуверенность, срыв самоконтроля, борьба со своими страхами через давление"
+      }
+    }
+  },
+  {
+    "id": "major-09-otshelnik",
+    "name": "Отшельник",
+    "arcana": "major",
+    "suit": null,
+    "number": 9,
+    "interpretations": {
+      "classic": {
+        "upright": "Пауза, уход внутрь себя за ответом, одиночество как ресурс",
+        "reversed": "Изоляция через отказ от помощи, замкнутость сверх меры"
+      }
+    }
+  },
+  {
+    "id": "major-10-koleso-fortuny",
+    "name": "Колесо Фортуны",
+    "arcana": "major",
+    "suit": null,
+    "number": 10,
+    "interpretations": {
+      "classic": {
+        "upright": "Перемены, цикл, удача поворачивается — вопрос времени",
+        "reversed": "Сопротивление переменам, полоса неудач, ощущение застревания в цикле"
+      }
+    }
+  },
+  {
+    "id": "major-11-spravedlivost",
+    "name": "Справедливость",
+    "arcana": "major",
+    "suit": null,
+    "number": 11,
+    "interpretations": {
+      "classic": {
+        "upright": "Причина и следствие, честное решение, баланс",
+        "reversed": "Несправедливость, уклонение от ответственности, предвзятость"
+      }
+    }
+  },
+  {
+    "id": "major-12-poveshennyi",
+    "name": "Повешенный",
+    "arcana": "major",
+    "suit": null,
+    "number": 12,
+    "interpretations": {
+      "classic": {
+        "upright": "Взгляд под другим углом, вынужденная пауза, жертва ради смысла",
+        "reversed": "Бессмысленная жертва, застревание в позиции жертвы, сопротивление паузе"
+      }
+    }
+  },
+  {
+    "id": "major-13-smert",
+    "name": "Смерть",
+    "arcana": "major",
+    "suit": null,
+    "number": 13,
+    "interpretations": {
+      "classic": {
+        "upright": "Завершение этапа, освобождение места для нового",
+        "reversed": "Затянувшееся окончание, страх отпустить, застревание в прошлом"
+      }
+    }
+  },
+  {
+    "id": "major-14-umerennost",
+    "name": "Умеренность",
+    "arcana": "major",
+    "suit": null,
+    "number": 14,
+    "interpretations": {
+      "classic": {
+        "upright": "Баланс, терпеливое смешение крайностей, гармония",
+        "reversed": "Перекос в крайность, нетерпеливость, потеря равновесия"
+      }
+    }
+  },
+  {
+    "id": "major-15-dyavol",
+    "name": "Дьявол",
+    "arcana": "major",
+    "suit": null,
+    "number": 15,
+    "interpretations": {
+      "classic": {
+        "upright": "Зависимость, иллюзия несвободы, соблазн",
+        "reversed": "Первый шаг к освобождению, осознание зависимости, разрыв цепи"
+      }
+    }
+  },
+  {
+    "id": "major-16-bashnya",
+    "name": "Башня",
+    "arcana": "major",
+    "suit": null,
+    "number": 16,
+    "interpretations": {
+      "classic": {
+        "upright": "Резкое разрушение старой конструкции, неизбежная правда",
+        "reversed": "Разрушение откладывается, но неизбежно; страх перемен удерживает от краха"
+      }
+    }
+  },
+  {
+    "id": "major-17-zvezda",
+    "name": "Звезда",
+    "arcana": "major",
+    "suit": null,
+    "number": 17,
+    "interpretations": {
+      "classic": {
+        "upright": "Надежда после кризиса, вдохновение, вера в лучшее",
+        "reversed": "Потеря веры, разочарование, истощённый оптимизм"
+      }
+    }
+  },
+  {
+    "id": "major-18-luna",
+    "name": "Луна",
+    "arcana": "major",
+    "suit": null,
+    "number": 18,
+    "interpretations": {
+      "classic": {
+        "upright": "Туман, тревога, скрытое пока не проявлено",
+        "reversed": "Прояснение, тревога отступает, иллюзии рассеиваются"
+      }
+    }
+  },
+  {
+    "id": "major-19-solntse",
+    "name": "Солнце",
+    "arcana": "major",
+    "suit": null,
+    "number": 19,
+    "interpretations": {
+      "classic": {
+        "upright": "Ясность, радость, успех и жизненная энергия",
+        "reversed": "Временное затишье радости, отложенный успех, лёгкая тень оптимизма"
+      }
+    }
+  },
+  {
+    "id": "major-20-sud",
+    "name": "Суд",
+    "arcana": "major",
+    "suit": null,
+    "number": 20,
+    "interpretations": {
+      "classic": {
+        "upright": "Пробуждение, подведение итогов, зов изменить жизнь",
+        "reversed": "Самокритика без действия, откладывание важного решения"
+      }
+    }
+  },
+  {
+    "id": "major-21-mir",
+    "name": "Мир",
+    "arcana": "major",
+    "suit": null,
+    "number": 21,
+    "interpretations": {
+      "classic": {
+        "upright": "Завершение цикла, целостность, достигнутая цель",
+        "reversed": "Незавершённость, задержка перед финалом, чего-то не хватает для полноты"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-01-tuz",
+    "name": "Туз Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 1,
+    "interpretations": {
+      "classic": {
+        "upright": "Новый импульс, вспышка вдохновения, старт дела",
+        "reversed": "Задержка старта, идея без реализации"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-02-dvoika",
+    "name": "Двойка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 2,
+    "interpretations": {
+      "classic": {
+        "upright": "Планирование, взгляд вдаль, первый выбор пути",
+        "reversed": "Страх выйти за пределы привычного, нерешительность в планах"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-03-troika",
+    "name": "Тройка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 3,
+    "interpretations": {
+      "classic": {
+        "upright": "Ожидание результата, расширение, первые плоды усилий",
+        "reversed": "Задержки в развитии, препятствия на пути расширения"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-04-chetverka",
+    "name": "Четвёрка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 4,
+    "interpretations": {
+      "classic": {
+        "upright": "Праздник, стабильность, повод для радости",
+        "reversed": "Нестабильность в доме или команде, отложенное празднование"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-05-pyaterka",
+    "name": "Пятёрка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 5,
+    "interpretations": {
+      "classic": {
+        "upright": "Конкуренция, трения, борьба за первенство",
+        "reversed": "Избегание конфликта, скрытое напряжение вместо открытого спора"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-06-shesterka",
+    "name": "Шестёрка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 6,
+    "interpretations": {
+      "classic": {
+        "upright": "Победа, признание, заслуженный успех",
+        "reversed": "Задержка признания, победа без огласки, самозванство"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-07-semerka",
+    "name": "Семёрка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 7,
+    "interpretations": {
+      "classic": {
+        "upright": "Защита позиции, отстаивание своего под давлением",
+        "reversed": "Истощение от постоянной обороны, сдача позиций"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-08-vosmerka",
+    "name": "Восьмёрка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 8,
+    "interpretations": {
+      "classic": {
+        "upright": "Быстрое движение, ускорение событий, новости",
+        "reversed": "Задержки, застой, новости откладываются"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-09-devyatka",
+    "name": "Девятка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 9,
+    "interpretations": {
+      "classic": {
+        "upright": "Усталость, но стойкость — почти у цели",
+        "reversed": "Истощение, готовность сдаться перед самым финишем"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-10-desyatka",
+    "name": "Десятка Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 10,
+    "interpretations": {
+      "classic": {
+        "upright": "Перегрузка, тяжесть ответственности, нужно делегировать",
+        "reversed": "Отказ от части ноши, освобождение от лишнего груза"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-11-pazh",
+    "name": "Паж Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 11,
+    "interpretations": {
+      "classic": {
+        "upright": "Любопытство, азарт новичка, смелая идея",
+        "reversed": "Импульсивность без плана, разочарование новичка"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-12-rytsar",
+    "name": "Рыцарь Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 12,
+    "interpretations": {
+      "classic": {
+        "upright": "Порыв, страсть, действие без раздумий",
+        "reversed": "Хаотичность, действие без цели, вспышка и быстрое остывание"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-13-koroleva",
+    "name": "Королева Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 13,
+    "interpretations": {
+      "classic": {
+        "upright": "Уверенность, харизма, тёплая сила лидера",
+        "reversed": "Ревность, требовательность, потеря уверенности в себе"
+      }
+    }
+  },
+  {
+    "id": "minor-wands-14-korol",
+    "name": "Король Жезлов",
+    "arcana": "minor",
+    "suit": "wands",
+    "number": 14,
+    "interpretations": {
+      "classic": {
+        "upright": "Визионер, предприниматель, зрелая решительность",
+        "reversed": "Импульсивная властность, давление на окружающих"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-01-tuz",
+    "name": "Туз Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 1,
+    "interpretations": {
+      "classic": {
+        "upright": "Новое чувство, эмоциональное открытие, любовь",
+        "reversed": "Заблокированные чувства, упущенная эмоциональная возможность"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-02-dvoika",
+    "name": "Двойка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 2,
+    "interpretations": {
+      "classic": {
+        "upright": "Взаимность, партнёрство, обмен на равных",
+        "reversed": "Дисбаланс в отношениях, разрыв связи"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-03-troika",
+    "name": "Тройка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 3,
+    "interpretations": {
+      "classic": {
+        "upright": "Дружба, праздник вместе, поддержка близких",
+        "reversed": "Избыток веселья в ущерб делу, конфликт в дружеском кругу"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-04-chetverka",
+    "name": "Четвёрка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 4,
+    "interpretations": {
+      "classic": {
+        "upright": "Апатия, упущенная возможность из-за скуки",
+        "reversed": "Выход из апатии, новый интерес после застоя"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-05-pyaterka",
+    "name": "Пятёрка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 5,
+    "interpretations": {
+      "classic": {
+        "upright": "Утрата, сожаление, но не всё ещё потеряно",
+        "reversed": "Принятие утраты, движение дальше, прощение"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-06-shesterka",
+    "name": "Шестёрка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 6,
+    "interpretations": {
+      "classic": {
+        "upright": "Ностальгия, тепло прошлого, детская непосредственность",
+        "reversed": "Излишняя привязанность к прошлому, невозможность двигаться вперёд"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-07-semerka",
+    "name": "Семёрка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 7,
+    "interpretations": {
+      "classic": {
+        "upright": "Иллюзии, слишком много вариантов, фантазии без выбора",
+        "reversed": "Ясность выбора, отказ от иллюзий, конкретное решение"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-08-vosmerka",
+    "name": "Восьмёрка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 8,
+    "interpretations": {
+      "classic": {
+        "upright": "Уход в поисках большего смысла, отказ от привычного",
+        "reversed": "Возврат к тому, от чего уже отказался, страх перемен"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-09-devyatka",
+    "name": "Девятка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 9,
+    "interpretations": {
+      "classic": {
+        "upright": "Удовлетворение, исполненное желание",
+        "reversed": "Поверхностное удовольствие, неудовлетворённость несмотря на успех"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-10-desyatka",
+    "name": "Десятка Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 10,
+    "interpretations": {
+      "classic": {
+        "upright": "Семейное счастье, эмоциональная полнота",
+        "reversed": "Трещина в гармонии семьи, недостижимый идеал"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-11-pazh",
+    "name": "Паж Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 11,
+    "interpretations": {
+      "classic": {
+        "upright": "Нежное послание, творческое чувство, чуткость",
+        "reversed": "Эмоциональная незрелость, послание не воспринято всерьёз"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-12-rytsar",
+    "name": "Рыцарь Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 12,
+    "interpretations": {
+      "classic": {
+        "upright": "Романтика, предложение с открытым сердцем",
+        "reversed": "Несбывшееся романтическое обещание, разочарование в чувствах"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-13-koroleva",
+    "name": "Королева Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 13,
+    "interpretations": {
+      "classic": {
+        "upright": "Эмпатия, эмоциональная мудрость, забота",
+        "reversed": "Излишняя чувствительность, растворение в чужих эмоциях"
+      }
+    }
+  },
+  {
+    "id": "minor-cups-14-korol",
+    "name": "Король Кубков",
+    "arcana": "minor",
+    "suit": "cups",
+    "number": 14,
+    "interpretations": {
+      "classic": {
+        "upright": "Спокойствие в чувствах, эмоциональная зрелость",
+        "reversed": "Эмоциональная холодность или, наоборот, перепады настроения"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-01-tuz",
+    "name": "Туз Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 1,
+    "interpretations": {
+      "classic": {
+        "upright": "Ясность, прорыв, честная правда",
+        "reversed": "Спутанность мыслей, правда искажается"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-02-dvoika",
+    "name": "Двойка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 2,
+    "interpretations": {
+      "classic": {
+        "upright": "Тупик, избегание решения, внутреннее противоречие",
+        "reversed": "Решение принято через силу, снятие блока с трудом"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-03-troika",
+    "name": "Тройка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 3,
+    "interpretations": {
+      "classic": {
+        "upright": "Боль, разрыв, горькая правда",
+        "reversed": "Заживление после боли, прощение раны"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-04-chetverka",
+    "name": "Четвёрка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 4,
+    "interpretations": {
+      "classic": {
+        "upright": "Отдых, восстановление после напряжения",
+        "reversed": "Вынужденное возвращение к делам раньше срока, недоотдых"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-05-pyaterka",
+    "name": "Пятёрка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 5,
+    "interpretations": {
+      "classic": {
+        "upright": "Пиррова победа, конфликт без выигравших",
+        "reversed": "Примирение после конфликта, отказ от бессмысленной борьбы"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-06-shesterka",
+    "name": "Шестёрка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 6,
+    "interpretations": {
+      "classic": {
+        "upright": "Переход к спокойствию, движение от трудностей",
+        "reversed": "Застревание в трудном периоде, сопротивление переезду/переходу"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-07-semerka",
+    "name": "Семёрка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 7,
+    "interpretations": {
+      "classic": {
+        "upright": "Хитрость, скрытный манёвр, не всё честно",
+        "reversed": "Разоблачение обмана, возврат к честности"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-08-vosmerka",
+    "name": "Восьмёрка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 8,
+    "interpretations": {
+      "classic": {
+        "upright": "Ощущение ловушки, хотя выход есть",
+        "reversed": "Освобождение от собственных ограничений, выход найден"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-09-devyatka",
+    "name": "Девятка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 9,
+    "interpretations": {
+      "classic": {
+        "upright": "Тревога, бессонница, страхи сильнее фактов",
+        "reversed": "Тревога отпускает, страхи начинают проясняться"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-10-desyatka",
+    "name": "Десятка Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 10,
+    "interpretations": {
+      "classic": {
+        "upright": "Дно пройдено, конец мучительного этапа",
+        "reversed": "Затягивание конца, сопротивление неизбежному финалу"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-11-pazh",
+    "name": "Паж Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 11,
+    "interpretations": {
+      "classic": {
+        "upright": "Любопытный ум, бдительность, новая информация",
+        "reversed": "Сплетни, поспешные выводы без проверки фактов"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-12-rytsar",
+    "name": "Рыцарь Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 12,
+    "interpretations": {
+      "classic": {
+        "upright": "Резкость, скорость, прямолинейный напор",
+        "reversed": "Импульсивная агрессия, действие без учёта последствий"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-13-koroleva",
+    "name": "Королева Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 13,
+    "interpretations": {
+      "classic": {
+        "upright": "Ясный ум, независимость, честность без прикрас",
+        "reversed": "Излишняя резкость, холодность, обида вместо честности"
+      }
+    }
+  },
+  {
+    "id": "minor-swords-14-korol",
+    "name": "Король Мечей",
+    "arcana": "minor",
+    "suit": "swords",
+    "number": 14,
+    "interpretations": {
+      "classic": {
+        "upright": "Логика, авторитет, беспристрастное решение",
+        "reversed": "Жёсткость мышления, манипуляция через логику"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-01-tuz",
+    "name": "Туз Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 1,
+    "interpretations": {
+      "classic": {
+        "upright": "Новая возможность в деньгах или деле, крепкое начало",
+        "reversed": "Упущенная материальная возможность, шаткое начало"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-02-dvoika",
+    "name": "Двойка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 2,
+    "interpretations": {
+      "classic": {
+        "upright": "Баланс между делами, гибкость в приоритетах",
+        "reversed": "Потеря баланса, перегрузка несколькими делами сразу"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-03-troika",
+    "name": "Тройка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 3,
+    "interpretations": {
+      "classic": {
+        "upright": "Совместная работа, мастерство, первые результаты команды",
+        "reversed": "Разлад в команде, недооценённый вклад"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-04-chetverka",
+    "name": "Четвёрка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 4,
+    "interpretations": {
+      "classic": {
+        "upright": "Контроль, накопление, страх отпустить ресурс",
+        "reversed": "Жадность или, наоборот, чрезмерная расточительность"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-05-pyaterka",
+    "name": "Пятёрка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 5,
+    "interpretations": {
+      "classic": {
+        "upright": "Нужда, чувство исключённости, трудный период",
+        "reversed": "Выход из нужды, помощь наконец приходит"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-06-shesterka",
+    "name": "Шестёрка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 6,
+    "interpretations": {
+      "classic": {
+        "upright": "Обмен, помощь, справедливое распределение",
+        "reversed": "Неравный обмен, зависимость или скрытая корысть в помощи"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-07-semerka",
+    "name": "Семёрка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 7,
+    "interpretations": {
+      "classic": {
+        "upright": "Оценка урожая, терпение, пересмотр вложенных усилий",
+        "reversed": "Нетерпение, разочарование в результате вложенного труда"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-08-vosmerka",
+    "name": "Восьмёрка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 8,
+    "interpretations": {
+      "classic": {
+        "upright": "Оттачивание мастерства, кропотливый труд",
+        "reversed": "Небрежность в работе, потеря интереса к качеству"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-09-devyatka",
+    "name": "Девятка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 9,
+    "interpretations": {
+      "classic": {
+        "upright": "Независимость, плоды собственного труда",
+        "reversed": "Излишняя зависимость от чужой поддержки, одиночество в успехе"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-10-desyatka",
+    "name": "Десятка Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 10,
+    "interpretations": {
+      "classic": {
+        "upright": "Наследие, стабильность, семейное благополучие",
+        "reversed": "Семейные споры о наследстве, нестабильность в быту"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-11-pazh",
+    "name": "Паж Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 11,
+    "interpretations": {
+      "classic": {
+        "upright": "Новая практичная идея, студенческий интерес",
+        "reversed": "Рассеянность, идея без дисциплины для реализации"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-12-rytsar",
+    "name": "Рыцарь Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 12,
+    "interpretations": {
+      "classic": {
+        "upright": "Надёжность, методичность, медленный но верный шаг",
+        "reversed": "Застой, излишняя медлительность, упрямство"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-13-koroleva",
+    "name": "Королева Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 13,
+    "interpretations": {
+      "classic": {
+        "upright": "Забота о быте, изобилие, практичная теплота",
+        "reversed": "Пренебрежение собой ради заботы о других, бытовая перегрузка"
+      }
+    }
+  },
+  {
+    "id": "minor-pentacles-14-korol",
+    "name": "Король Пентаклей",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "number": 14,
+    "interpretations": {
+      "classic": {
+        "upright": "Стабильность, состоятельность, надёжный хозяин",
+        "reversed": "Материализм, жёсткий контроль над ресурсами"
+      }
+    }
+  }
+]
