@@ -39,6 +39,8 @@ function renderToday() {
     container.appendChild(buildMealCard(slot, meal));
   });
 
+  renderCustomEntries();
+
   const trainDayBox = qs("#training-day-box");
   if (isTrainingDay(currentDate)) {
     trainDayBox.hidden = false;
@@ -88,6 +90,67 @@ function buildMealCard(slot, meal) {
 document.addEventListener("DOMContentLoaded", () => {
   qs("#today-prev").addEventListener("click", () => { currentDate = toISODate(addDays(currentDate, -1)); renderToday(); });
   qs("#today-next").addEventListener("click", () => { currentDate = toISODate(addDays(currentDate, 1)); renderToday(); });
+});
+
+// ---------- Свои записи (еда не из плана) ----------
+
+function renderCustomEntries() {
+  const container = qs("#custom-entries");
+  const entries = getCustomEntries(currentDate);
+  container.innerHTML = "";
+  entries.forEach((entry) => {
+    const row = document.createElement("div");
+    row.className = "meal-card custom-entry";
+    row.innerHTML = `
+      <div class="meal-card-header">
+        <span class="slot-label">Своя запись</span>
+        <span class="meal-kcal">${entry.kcal} ккал</span>
+      </div>
+      <div class="meal-name">${entry.name}</div>
+      <div class="custom-macros mono">Б${entry.macros.proteinG} Ж${entry.macros.fatG} У${entry.macros.carbG}</div>
+      <div class="meal-actions">
+        <button type="button" class="link-btn remove-custom-btn">Удалить</button>
+      </div>
+    `;
+    row.querySelector(".remove-custom-btn").addEventListener("click", () => {
+      removeCustomEntry(currentDate, entry.id);
+      renderToday();
+    });
+    container.appendChild(row);
+  });
+}
+
+function openCustomEntryModal() {
+  qs("#custom-form").reset();
+  qs("#custom-modal").hidden = false;
+  qs("#custom-name").focus();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  qs("#add-custom-btn").addEventListener("click", openCustomEntryModal);
+  qs("#custom-modal-close").addEventListener("click", () => { qs("#custom-modal").hidden = true; });
+  qs("#custom-modal").addEventListener("click", (e) => { if (e.target.id === "custom-modal") qs("#custom-modal").hidden = true; });
+
+  qs("#custom-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = qs("#custom-name").value.trim();
+    const kcal = Number(qs("#custom-kcal").value) || 0;
+    const proteinG = Number(qs("#custom-protein").value) || 0;
+    const fatG = Number(qs("#custom-fat").value) || 0;
+    const carbG = Number(qs("#custom-carb").value) || 0;
+    if (!name || kcal <= 0) return;
+    addCustomEntry(currentDate, { name, kcal, proteinG, fatG, carbG });
+    qs("#custom-modal").hidden = true;
+    renderToday();
+  });
+
+  // Автоподсчёт калорий из БЖУ, если поле «Калории» оставили пустым.
+  qs("#custom-autofill-btn").addEventListener("click", () => {
+    const proteinG = Number(qs("#custom-protein").value) || 0;
+    const fatG = Number(qs("#custom-fat").value) || 0;
+    const carbG = Number(qs("#custom-carb").value) || 0;
+    qs("#custom-kcal").value = Math.round(proteinG * 4 + fatG * 9 + carbG * 4);
+  });
 });
 
 // ---------- Неделя ----------

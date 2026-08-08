@@ -1,22 +1,34 @@
 // Хранение отметок о выполнении в localStorage. Переживает перезагрузку страницы.
 
 const STORAGE_KEY = "nutritionAppState";
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
 function defaultState() {
   return {
     schemaVersion: SCHEMA_VERSION,
     completions: {},
     mealSelections: {},
-    shoppingListChecks: {}
+    shoppingListChecks: {},
+    customEntries: {}
   };
+}
+
+// Аккуратно донастраивает старые сохранённые данные до текущей схемы,
+// не стирая прогресс пользователя.
+function migrateState(parsed) {
+  if (parsed.schemaVersion === 1) {
+    parsed.customEntries = parsed.customEntries || {};
+    parsed.schemaVersion = 2;
+  }
+  return parsed;
 }
 
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return defaultState();
-    const parsed = JSON.parse(raw);
+    let parsed = JSON.parse(raw);
+    if (parsed.schemaVersion < SCHEMA_VERSION) parsed = migrateState(parsed);
     if (parsed.schemaVersion !== SCHEMA_VERSION) return defaultState();
     return parsed;
   } catch (e) {
@@ -92,6 +104,31 @@ function toggleShoppingItem(weekStart, key) {
 
 function isShoppingItemChecked(weekStart, key) {
   return !!(state.shoppingListChecks[weekStart] && state.shoppingListChecks[weekStart][key]);
+}
+
+// ---------- Свои записи (еда не из плана) ----------
+
+function addCustomEntry(date, entry) {
+  if (!state.customEntries[date]) state.customEntries[date] = [];
+  const record = {
+    id: `custom-${Date.now()}-${Math.round(Math.random() * 1000)}`,
+    name: entry.name,
+    kcal: entry.kcal,
+    macros: { proteinG: entry.proteinG, fatG: entry.fatG, carbG: entry.carbG }
+  };
+  state.customEntries[date].push(record);
+  saveState();
+  return record;
+}
+
+function removeCustomEntry(date, id) {
+  if (!state.customEntries[date]) return;
+  state.customEntries[date] = state.customEntries[date].filter((e) => e.id !== id);
+  saveState();
+}
+
+function getCustomEntries(date) {
+  return (state.customEntries[date] || []).slice();
 }
 
 function getState() {

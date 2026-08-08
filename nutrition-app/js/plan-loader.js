@@ -75,5 +75,11 @@ function getDayTotals(isoDate) {
     fatG += bonus.macros.fatG;
     carbG += bonus.macros.carbG;
   }
+  getCustomEntries(isoDate).forEach((entry) => {
+    kcal += entry.kcal;
+    proteinG += entry.macros.proteinG;
+    fatG += entry.macros.fatG;
+    carbG += entry.macros.carbG;
+  });
   return { kcal, proteinG, fatG, carbG };
 }
