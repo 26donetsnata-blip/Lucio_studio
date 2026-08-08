@@ -111,38 +111,56 @@
   <div class="modal-content">
     <button id="custom-modal-close" class="icon-btn modal-close" aria-label="Закрыть">✕</button>
     <h3>Своя запись</h3>
-    <p class="modal-kcal">Что-то не из плана? Впишите вручную — учтётся в дневном итоге.</p>
+    <p class="modal-kcal">Впишите продукт и вес в граммах — калории и БЖУ посчитаются сами.</p>
     <form id="custom-form" class="custom-form">
       <label class="form-field">
-        <span>Что съели</span>
-        <input type="text" id="custom-name" placeholder="Например, кусок пиццы" required />
+        <span>Продукт</span>
+        <input type="text" id="custom-name" list="food-datalist" placeholder="Например, гречка" required autocomplete="off" />
+        <datalist id="food-datalist"></datalist>
       </label>
-      <div class="form-row">
+      <label class="form-field">
+        <span>Вес, г</span>
+        <input type="number" id="custom-grams" min="0" step="1" inputmode="numeric" placeholder="Например, 150" required />
+      </label>
+
+      <p id="custom-match-status" class="match-status"></p>
+      <div id="custom-preview" class="custom-preview" hidden>
+        <span class="preview-kcal mono"></span>
+        <span class="preview-macros mono"></span>
+      </div>
+
+      <button type="button" id="custom-manual-toggle" class="link-btn">Продукта нет в списке — ввести калории/БЖУ вручную</button>
+
+      <div id="custom-manual-fields" class="custom-manual-fields" hidden>
+        <div class="form-row">
+          <label class="form-field">
+            <span>Белки, г</span>
+            <input type="number" id="custom-protein" min="0" step="1" inputmode="numeric" />
+          </label>
+          <label class="form-field">
+            <span>Жиры, г</span>
+            <input type="number" id="custom-fat" min="0" step="1" inputmode="numeric" />
+          </label>
+          <label class="form-field">
+            <span>Углеводы, г</span>
+            <input type="number" id="custom-carb" min="0" step="1" inputmode="numeric" />
+          </label>
+        </div>
         <label class="form-field">
-          <span>Белки, г</span>
-          <input type="number" id="custom-protein" min="0" step="1" inputmode="numeric" />
-        </label>
-        <label class="form-field">
-          <span>Жиры, г</span>
-          <input type="number" id="custom-fat" min="0" step="1" inputmode="numeric" />
-        </label>
-        <label class="form-field">
-          <span>Углеводы, г</span>
-          <input type="number" id="custom-carb" min="0" step="1" inputmode="numeric" />
+          <span>Калории</span>
+          <div class="kcal-row">
+            <input type="number" id="custom-kcal" min="0" step="1" inputmode="numeric" />
+            <button type="button" id="custom-autofill-btn" class="link-btn">Посчитать из БЖУ</button>
+          </div>
         </label>
       </div>
-      <label class="form-field">
-        <span>Калории</span>
-        <div class="kcal-row">
-          <input type="number" id="custom-kcal" min="0" step="1" inputmode="numeric" required />
-          <button type="button" id="custom-autofill-btn" class="link-btn">Посчитать из БЖУ</button>
-        </div>
-      </label>
+
       <button type="submit" class="submit-btn">Добавить</button>
     </form>
   </div>
 </div>
 
+<script src="./js/food-db.js"></script>
 <script src="./js/data.js"></script>
 <script src="./js/nutrition-calc.js"></script>
 <script src="./js/state.js"></script>

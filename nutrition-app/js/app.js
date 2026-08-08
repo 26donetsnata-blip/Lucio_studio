@@ -120,10 +120,47 @@ function renderCustomEntries() {
   });
 }
 
+let customManualMode = false;
+
 function openCustomEntryModal() {
   qs("#custom-form").reset();
+  customManualMode = false;
+  qs("#custom-manual-fields").hidden = true;
+  qs("#custom-manual-toggle").textContent = "Продукта нет в списке — ввести калории/БЖУ вручную";
+  qs("#custom-preview").hidden = true;
+  qs("#custom-match-status").textContent = "";
   qs("#custom-modal").hidden = false;
   qs("#custom-name").focus();
+}
+
+// Пересчитывает предпросмотр калорий/БЖУ по названию продукта и весу.
+function updateCustomPreview() {
+  if (customManualMode) return;
+  const name = qs("#custom-name").value;
+  const grams = Number(qs("#custom-grams").value);
+  const food = findFood(name);
+  const preview = qs("#custom-preview");
+  const status = qs("#custom-match-status");
+
+  if (!name.trim()) {
+    status.textContent = "";
+    preview.hidden = true;
+    return;
+  }
+  if (!food) {
+    status.textContent = "Продукт не найден в базе — нажмите «ввести вручную» ниже.";
+    preview.hidden = true;
+    return;
+  }
+  status.textContent = `Найдено: ${food.name} (${food.kcal} ккал на 100 г)`;
+  if (!grams || grams <= 0) {
+    preview.hidden = true;
+    return;
+  }
+  const computed = computeFoodByGrams(food, grams);
+  preview.hidden = false;
+  preview.querySelector(".preview-kcal").textContent = `≈ ${computed.kcal} ккал`;
+  preview.querySelector(".preview-macros").textContent = `Б${computed.proteinG} Ж${computed.fatG} У${computed.carbG}`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -131,20 +168,47 @@ document.addEventListener("DOMContentLoaded", () => {
   qs("#custom-modal-close").addEventListener("click", () => { qs("#custom-modal").hidden = true; });
   qs("#custom-modal").addEventListener("click", (e) => { if (e.target.id === "custom-modal") qs("#custom-modal").hidden = true; });
 
+  const datalist = qs("#food-datalist");
+  datalist.innerHTML = FOOD_DATABASE.map((f) => `<option value="${f.name}"></option>`).join("");
+
+  qs("#custom-name").addEventListener("input", updateCustomPreview);
+  qs("#custom-grams").addEventListener("input", updateCustomPreview);
+
+  qs("#custom-manual-toggle").addEventListener("click", () => {
+    customManualMode = !customManualMode;
+    qs("#custom-manual-fields").hidden = !customManualMode;
+    qs("#custom-manual-toggle").textContent = customManualMode
+      ? "Вернуться к подсчёту по весу"
+      : "Продукта нет в списке — ввести калории/БЖУ вручную";
+    qs("#custom-preview").hidden = true;
+    qs("#custom-match-status").textContent = "";
+  });
+
   qs("#custom-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const name = qs("#custom-name").value.trim();
-    const kcal = Number(qs("#custom-kcal").value) || 0;
-    const proteinG = Number(qs("#custom-protein").value) || 0;
-    const fatG = Number(qs("#custom-fat").value) || 0;
-    const carbG = Number(qs("#custom-carb").value) || 0;
-    if (!name || kcal <= 0) return;
-    addCustomEntry(currentDate, { name, kcal, proteinG, fatG, carbG });
+    if (!name) return;
+
+    if (customManualMode) {
+      const proteinG = Number(qs("#custom-protein").value) || 0;
+      const fatG = Number(qs("#custom-fat").value) || 0;
+      const carbG = Number(qs("#custom-carb").value) || 0;
+      const kcal = Number(qs("#custom-kcal").value) || Math.round(proteinG * 4 + fatG * 9 + carbG * 4);
+      if (kcal <= 0) return;
+      addCustomEntry(currentDate, { name, kcal, proteinG, fatG, carbG });
+    } else {
+      const grams = Number(qs("#custom-grams").value);
+      const food = findFood(name);
+      if (!food || !grams || grams <= 0) return;
+      const computed = computeFoodByGrams(food, grams);
+      addCustomEntry(currentDate, { name: `${name} (${grams} г)`, ...computed });
+    }
+
     qs("#custom-modal").hidden = true;
     renderToday();
   });
 
-  // Автоподсчёт калорий из БЖУ, если поле «Калории» оставили пустым.
+  // Автоподсчёт калорий из БЖУ в ручном режиме.
   qs("#custom-autofill-btn").addEventListener("click", () => {
     const proteinG = Number(qs("#custom-protein").value) || 0;
     const fatG = Number(qs("#custom-fat").value) || 0;
