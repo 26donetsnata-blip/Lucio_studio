@@ -1,0 +1,9 @@
+{
+  "name": "Питание на 30 дней",
+  "short_name": "Питание",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fafaf8",
+  "theme_color": "#2f8f6e",
+  "icons": []
+}
