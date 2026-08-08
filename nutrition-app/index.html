@@ -26,6 +26,10 @@
 
     <div id="today-meals" class="meal-list"></div>
 
+    <div id="custom-entries" class="meal-list custom-entries-list"></div>
+
+    <button type="button" id="add-custom-btn" class="add-custom-btn">+ Добавить свою запись</button>
+
     <div id="training-day-box" class="training-box" hidden>
       <h3>День силовой тренировки</h3>
       <p class="bonus-name"></p>
@@ -100,6 +104,42 @@
     <ol id="modal-steps"></ol>
     <h4>Заменить блюдо</h4>
     <div id="modal-alternatives" class="alt-list"></div>
+  </div>
+</div>
+
+<div id="custom-modal" class="modal" hidden>
+  <div class="modal-content">
+    <button id="custom-modal-close" class="icon-btn modal-close" aria-label="Закрыть">✕</button>
+    <h3>Своя запись</h3>
+    <p class="modal-kcal">Что-то не из плана? Впишите вручную — учтётся в дневном итоге.</p>
+    <form id="custom-form" class="custom-form">
+      <label class="form-field">
+        <span>Что съели</span>
+        <input type="text" id="custom-name" placeholder="Например, кусок пиццы" required />
+      </label>
+      <div class="form-row">
+        <label class="form-field">
+          <span>Белки, г</span>
+          <input type="number" id="custom-protein" min="0" step="1" inputmode="numeric" />
+        </label>
+        <label class="form-field">
+          <span>Жиры, г</span>
+          <input type="number" id="custom-fat" min="0" step="1" inputmode="numeric" />
+        </label>
+        <label class="form-field">
+          <span>Углеводы, г</span>
+          <input type="number" id="custom-carb" min="0" step="1" inputmode="numeric" />
+        </label>
+      </div>
+      <label class="form-field">
+        <span>Калории</span>
+        <div class="kcal-row">
+          <input type="number" id="custom-kcal" min="0" step="1" inputmode="numeric" required />
+          <button type="button" id="custom-autofill-btn" class="link-btn">Посчитать из БЖУ</button>
+        </div>
+      </label>
+      <button type="submit" class="submit-btn">Добавить</button>
+    </form>
   </div>
 </div>
 
