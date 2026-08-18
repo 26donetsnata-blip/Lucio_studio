@@ -2,12 +2,21 @@
 // Значения — усреднённые по стандартным таблицам состава продуктов.
 
 const FOOD_DATABASE = [
-  { name: "Овсяные хлопья", kcal: 342, proteinG: 12, fatG: 6, carbG: 58 },
-  { name: "Гречка", kcal: 313, proteinG: 12.6, fatG: 3.3, carbG: 62 },
-  { name: "Рис", kcal: 344, proteinG: 6.7, fatG: 0.7, carbG: 78.9 },
-  { name: "Булгур", kcal: 342, proteinG: 12.3, fatG: 1.3, carbG: 67.7 },
-  { name: "Чечевица", kcal: 295, proteinG: 24, fatG: 1.1, carbG: 46.3 },
-  { name: "Макароны", kcal: 337, proteinG: 10.4, fatG: 1.1, carbG: 69.7 },
+  // Крупы, макароны — по умолчанию значения для ГОТОВОГО (сваренного) продукта,
+  // потому что на весах обычно оказывается порция с тарелки, а не сухая крупа.
+  // Для тех, кто взвешивает крупу до варки, есть отдельные пункты «(сухая)».
+  { name: "Овсяная каша на воде", kcal: 88, proteinG: 3, fatG: 1.5, carbG: 15 },
+  { name: "Овсяные хлопья (сухие)", kcal: 342, proteinG: 12, fatG: 6, carbG: 58 },
+  { name: "Гречка варёная", kcal: 92, proteinG: 3.2, fatG: 0.6, carbG: 19.9 },
+  { name: "Гречка (сухая)", kcal: 313, proteinG: 12.6, fatG: 3.3, carbG: 62 },
+  { name: "Рис варёный", kcal: 116, proteinG: 2.2, fatG: 0.5, carbG: 25 },
+  { name: "Рис (сухой)", kcal: 344, proteinG: 6.7, fatG: 0.7, carbG: 78.9 },
+  { name: "Булгур варёный", kcal: 83, proteinG: 3.1, fatG: 0.2, carbG: 18.6 },
+  { name: "Булгур (сухой)", kcal: 342, proteinG: 12.3, fatG: 1.3, carbG: 67.7 },
+  { name: "Чечевица варёная", kcal: 116, proteinG: 9, fatG: 0.4, carbG: 20 },
+  { name: "Чечевица (сухая)", kcal: 295, proteinG: 24, fatG: 1.1, carbG: 46.3 },
+  { name: "Макароны варёные", kcal: 112, proteinG: 3.5, fatG: 0.4, carbG: 23 },
+  { name: "Макароны (сухие)", kcal: 337, proteinG: 10.4, fatG: 1.1, carbG: 69.7 },
   { name: "Гранола / мюсли без сахара", kcal: 370, proteinG: 10, fatG: 8, carbG: 65 },
   { name: "Творог 5%", kcal: 121, proteinG: 17.2, fatG: 5, carbG: 1.8 },
   { name: "Творог 2%", kcal: 103, proteinG: 18, fatG: 2, carbG: 3.3 },
