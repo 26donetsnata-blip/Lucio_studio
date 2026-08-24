@@ -51,6 +51,10 @@ jobs:
             mkdir -p _site/gotovo
             cp -R gotovo/. _site/gotovo/
           fi
+          # Без этого файла GitHub прогоняет сайт через Jekyll, а тот
+          # выбрасывает всё, что начинается с подчёркивания — в том числе
+          # папку _next со стилями и шрифтами.
+          touch _site/.nojekyll
           echo "Содержимое сайта:"
           ls -la _site
           test -f _site/index.html || { echo "Нет корневого index.html — деплой остановлен"; exit 1; }
