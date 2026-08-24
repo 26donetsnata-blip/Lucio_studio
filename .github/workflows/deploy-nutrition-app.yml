@@ -1,10 +1,24 @@
-name: Deploy Nutrition App to GitHub Pages
+# Публикация на GitHub Pages.
+#
+# У репозитория один сайт, а проектов на нём теперь два, поэтому сайт
+# собирается из двух папок:
+#   /         — приложение по питанию (nutrition-app), как было раньше
+#   /gotovo/  — «Готово», превью приложения «что приготовить по фото»
+#
+# Папка gotovo/ — это уже собранные статические файлы. Исходники «Готово»
+# живут отдельно (~/Готово), сюда кладётся только результат сборки, потому
+# что превью временное: как только у приложения появится серверная часть
+# (распознавание фото и генерация рецептов), GitHub Pages его раздавать
+# не сможет и превью переедет на полноценный хостинг.
+
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
     paths:
       - "nutrition-app/**"
+      - "gotovo/**"
       - ".github/workflows/deploy-nutrition-app.yml"
   workflow_dispatch:
 
@@ -25,12 +39,30 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Собрать сайт из двух приложений
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          # приложение по питанию остаётся в корне — его адрес не меняется
+          cp -R nutrition-app/. _site/
+          # «Готово» — во вложенную папку
+          if [ -d gotovo ]; then
+            mkdir -p _site/gotovo
+            cp -R gotovo/. _site/gotovo/
+          fi
+          echo "Содержимое сайта:"
+          ls -la _site
+          test -f _site/index.html || { echo "Нет корневого index.html — деплой остановлен"; exit 1; }
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: nutrition-app
+          path: _site
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
