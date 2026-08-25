@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>«Готово» — помоги выбрать</title>
+<meta property="og:title" content="«Готово» — помоги выбрать оформление">
+<meta property="og:description" content="Два варианта, шесть вопросов, две минуты.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --bg:#F3F4F1; --card:#fff; --ink:#1E2320; --muted:#6B7268; --rule:#DEE2DB;
+    --accent:#2F6B4E; --accent-soft:#E4EFE8; --warn:#B0603A;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#141715;--card:#1D211E;--ink:#E9EDE8;--muted:#9AA398;--rule:#2C322D;
+          --accent:#7FC3A0;--accent-soft:#1E2E26;--warn:#DFA07C;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"Manrope",system-ui,-apple-system,sans-serif;
+       font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:28px 18px 64px}
+
+  h1{margin:0;font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+  .lead{margin:12px 0 0;color:var(--muted);font-size:15px}
+  .time{display:inline-block;margin-top:14px;padding:5px 12px;border-radius:999px;
+        background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:800}
+
+  .shots{margin-top:26px;display:grid;gap:18px}
+  figure{margin:0;background:var(--card);border:1px solid var(--rule);
+         border-radius:18px;overflow:hidden}
+  figure img{width:100%;display:block}
+  figcaption{padding:11px 14px;font-size:14px;font-weight:800}
+  figcaption span{color:var(--muted);font-weight:600}
+
+  .q{margin-top:22px;background:var(--card);border:1px solid var(--rule);
+     border-radius:18px;padding:16px 16px 18px}
+  .q h2{margin:0 0 12px;font-size:16px;font-weight:800;line-height:1.3}
+  .q h2 b{color:var(--accent);margin-right:6px}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  button.opt{
+    font:inherit;font-size:15px;font-weight:700;color:var(--ink);
+    background:var(--bg);border:1.5px solid var(--rule);border-radius:999px;
+    padding:11px 16px;min-height:44px;cursor:pointer;
+    transition:background .15s,border-color .15s,color .15s}
+  button.opt:hover{border-color:var(--accent)}
+  button.opt[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+  @media (prefers-color-scheme: dark){
+    button.opt[aria-pressed="true"]{color:#0F1512}
+  }
+  textarea{width:100%;min-height:76px;padding:12px 14px;border-radius:14px;
+           border:1.5px solid var(--rule);background:var(--bg);color:var(--ink);
+           font:inherit;font-size:15px;resize:vertical}
+  textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+
+  .done{margin-top:26px;background:var(--card);border:1px solid var(--rule);
+        border-radius:18px;padding:16px}
+  .done p{margin:0 0 12px;font-size:14px;color:var(--muted)}
+  button.send{width:100%;min-height:54px;border:none;border-radius:16px;
+    background:var(--accent);color:#fff;font:inherit;font-size:16px;font-weight:800;
+    cursor:pointer}
+  @media (prefers-color-scheme: dark){button.send{color:#0F1512}}
+  button.send:disabled{opacity:.45;cursor:not-allowed}
+  .hint{margin-top:10px;font-size:13px;color:var(--muted);text-align:center;min-height:20px}
+  .hint.ok{color:var(--accent);font-weight:700}
+
+  .preview{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--bg);
+           border:1px dashed var(--rule);font-size:13px;color:var(--muted);
+           white-space:pre-wrap;word-break:break-word}
+  footer{margin-top:32px;color:var(--muted);font-size:12.5px;text-align:center}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Помоги выбрать, как будет выглядеть «Готово»</h1>
+  <p class="lead">
+    Это приложение: фотографируешь холодильник — оно показывает, что из этого
+    можно приготовить сегодня. Нужен твой взгляд со стороны.
+  </p>
+  <span class="time">2 минуты · 6 вопросов</span>
+
+  <div class="shots">
+    <figure>
+      <img src="variant-a.jpg" alt="Вариант А — светлый: персиковый фон, белые карточки с фото блюд">
+      <figcaption>Вариант А <span>— светлый</span></figcaption>
+    </figure>
+    <figure>
+      <img src="variant-b.jpg" alt="Вариант Б — тёмный: глубокий зелёный фон, фото во всю карточку">
+      <figcaption>Вариант Б <span>— тёмный</span></figcaption>
+    </figure>
+  </div>
+
+  <form id="f">
+    <div class="q" data-q="Вариант">
+      <h2><b>1.</b> Какой вариант приятнее?</h2>
+      <div class="opts">
+        <button type="button" class="opt" aria-pressed="false">А — светлый</button>
+        <button type="button" class="opt" aria-pressed="false">Б — тёмный</button>
+        <button type="button" class="opt" aria-pressed="false">Оба так себе</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="Бросилось в глаза">
+      <h2><b>2.</b> Что первым бросилось в глаза?</h2>
+      <textarea placeholder="Одной фразой — что угодно, хоть «слишком тёмно»"></textarea>
+    </div>
+
+    <div class="q" data-q="Понятно, что делает">
+      <h2><b>3.</b> С первого экрана понятно, что приложение делает?</h2>
+      <div class="opts">
+        <button type="button" class="opt" aria-pressed="false">Да</button>
+        <button type="button" class="opt" aria-pressed="false">Не совсем</button>
+        <button type="button" class="opt" aria-pressed="false">Нет</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="Стала бы пользоваться">
+      <h2><b>4.</b> Стала бы таким пользоваться?</h2>
+      <div class="opts">
+        <button type="button" class="opt" aria-pressed="false">Да</button>
+        <button type="button" class="opt" aria-pressed="false">Может быть</button>
+        <button type="button" class="opt" aria-pressed="false">Нет</button>
+      </div>
+    </div>
+
+    <div class="q" data-q="Не хватает / лишнее">
+      <h2><b>5.</b> Чего не хватает или что лишнее?</h2>
+      <textarea placeholder="Одной фразой"></textarea>
+    </div>
+
+    <div class="q" data-q="Как часто не знаю что готовить">
+      <h2><b>6.</b> Как часто ты стоишь у холодильника и не знаешь, что приготовить?</h2>
+      <div class="opts">
+        <button type="button" class="opt" aria-pressed="false">Почти каждый день</button>
+        <button type="button" class="opt" aria-pressed="false">Пару раз в неделю</button>
+        <button type="button" class="opt" aria-pressed="false">Редко</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="done">
+    <p>Готово? Нажми — ответы скопируются, останется вставить их в чат.</p>
+    <button class="send" id="copy" disabled>Скопировать ответы</button>
+    <div class="hint" id="hint">Ответь хотя бы на первый вопрос</div>
+    <div class="preview" id="preview" hidden></div>
+  </div>
+
+  <footer>Фото блюд в макетах — временные, для примера.</footer>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('f');
+  var copyBtn = document.getElementById('copy');
+  var hint = document.getElementById('hint');
+  var preview = document.getElementById('preview');
+
+  /* Выбор одного варианта внутри вопроса. */
+  form.addEventListener('click', function (e) {
+    var b = e.target.closest('button.opt');
+    if (!b) return;
+    var group = b.closest('.q');
+    group.querySelectorAll('button.opt').forEach(function (o) {
+      o.setAttribute('aria-pressed', String(o === b));
+    });
+    refresh();
+  });
+  form.addEventListener('input', refresh);
+
+  function collect() {
+    var lines = [];
+    form.querySelectorAll('.q').forEach(function (q) {
+      var label = q.dataset.q;
+      var picked = q.querySelector('button.opt[aria-pressed="true"]');
+      var text = q.querySelector('textarea');
+      var value = picked ? picked.textContent.trim()
+                         : (text && text.value.trim() ? text.value.trim() : '');
+      if (value) lines.push(label + ': ' + value);
+    });
+    return lines;
+  }
+
+  function refresh() {
+    var lines = collect();
+    copyBtn.disabled = lines.length === 0;
+    if (lines.length) {
+      preview.hidden = false;
+      preview.textContent = lines.join('\n');
+      hint.textContent = 'Отвечено: ' + lines.length + ' из 6';
+      hint.className = 'hint';
+    } else {
+      preview.hidden = true;
+      hint.textContent = 'Ответь хотя бы на первый вопрос';
+    }
+  }
+
+  copyBtn.addEventListener('click', function () {
+    var body = 'Опрос «Готово»\n' + collect().join('\n');
+    function ok() {
+      hint.textContent = 'Скопировано — вставь в чат';
+      hint.className = 'hint ok';
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(body).then(ok, fallback);
+    } else {
+      fallback();
+    }
+    function fallback() {
+      /* Старый способ — на случай, если браузер не даёт доступ к буферу. */
+      var ta = document.createElement('textarea');
+      ta.value = body;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); ok(); }
+      catch (err) { hint.textContent = 'Не вышло скопировать — выдели текст ниже вручную'; }
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>
+</body>
+</html>
