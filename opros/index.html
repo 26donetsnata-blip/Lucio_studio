@@ -145,8 +145,8 @@
   </form>
 
   <div class="done">
-    <p>Готово? Нажми — ответы скопируются, останется вставить их в чат.</p>
-    <button class="send" id="copy" disabled>Скопировать ответы</button>
+    <p>Всё, спасибо. Ничего копировать и пересылать не нужно — просто нажми.</p>
+    <button class="send" id="send" disabled>Отправить ответы</button>
     <div class="hint" id="hint">Ответь хотя бы на первый вопрос</div>
     <div class="preview" id="preview" hidden></div>
   </div>
@@ -156,10 +156,16 @@
 
 <script>
 (function () {
+  /* Ответы уходят на почтовый шлюз, а не хранятся на этой странице:
+     GitHub Pages раздаёт только статику и принимать данные не умеет.
+     Адрес почты в коде не светится — вместо него выданный шлюзом ключ. */
+  var ENDPOINT = 'https://formsubmit.co/ajax/398d2631a380e396ad1eae1f88b1a753';
+
   var form = document.getElementById('f');
-  var copyBtn = document.getElementById('copy');
+  var sendBtn = document.getElementById('send');
   var hint = document.getElementById('hint');
   var preview = document.getElementById('preview');
+  var sent = false;
 
   /* Выбор одного варианта внутри вопроса. */
   form.addEventListener('click', function (e) {
@@ -174,6 +180,7 @@
   form.addEventListener('input', refresh);
 
   function collect() {
+    var answers = {};
     var lines = [];
     form.querySelectorAll('.q').forEach(function (q) {
       var label = q.dataset.q;
@@ -181,14 +188,18 @@
       var text = q.querySelector('textarea');
       var value = picked ? picked.textContent.trim()
                          : (text && text.value.trim() ? text.value.trim() : '');
-      if (value) lines.push(label + ': ' + value);
+      if (value) {
+        answers[label] = value;
+        lines.push(label + ': ' + value);
+      }
     });
-    return lines;
+    return { answers: answers, lines: lines };
   }
 
   function refresh() {
-    var lines = collect();
-    copyBtn.disabled = lines.length === 0;
+    if (sent) return;
+    var lines = collect().lines;
+    sendBtn.disabled = lines.length === 0;
     if (lines.length) {
       preview.hidden = false;
       preview.textContent = lines.join('\n');
@@ -200,30 +211,65 @@
     }
   }
 
-  copyBtn.addEventListener('click', function () {
-    var body = 'Опрос «Готово»\n' + collect().join('\n');
-    function ok() {
-      hint.textContent = 'Скопировано — вставь в чат';
-      hint.className = 'hint ok';
-    }
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(body).then(ok, fallback);
-    } else {
-      fallback();
-    }
-    function fallback() {
-      /* Старый способ — на случай, если браузер не даёт доступ к буферу. */
-      var ta = document.createElement('textarea');
-      ta.value = body;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); ok(); }
-      catch (err) { hint.textContent = 'Не вышло скопировать — выдели текст ниже вручную'; }
-      document.body.removeChild(ta);
-    }
+  sendBtn.addEventListener('click', function () {
+    if (sent) return;
+    var data = collect();
+    var payload = { _subject: 'Опрос «Готово» — новый ответ', _captcha: 'false' };
+    Object.keys(data.answers).forEach(function (k) { payload[k] = data.answers[k]; });
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Отправляем…';
+    hint.textContent = '';
+    hint.className = 'hint';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function () { done(); })
+      .catch(function () { failed(data.lines); });
   });
+
+  function done() {
+    sent = true;
+    sendBtn.textContent = 'Спасибо! Ответы ушли';
+    sendBtn.disabled = true;
+    hint.textContent = 'Больше ничего делать не нужно';
+    hint.className = 'hint ok';
+    preview.hidden = true;
+    form.querySelectorAll('button.opt, textarea').forEach(function (el) { el.disabled = true; });
+  }
+
+  /* Если интернет подвёл — не теряем ответы, а даём скопировать их руками. */
+  function failed(lines) {
+    sendBtn.textContent = 'Скопировать ответы';
+    sendBtn.disabled = false;
+    hint.textContent = 'Не отправилось. Скопируй и пришли ответы в чат';
+    preview.hidden = false;
+    preview.textContent = lines.join('\n');
+    sendBtn.onclick = function () {
+      var body = 'Опрос «Готово»\n' + lines.join('\n');
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(body).then(copied, function () {});
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = body;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); copied(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    };
+  }
+
+  function copied() {
+    hint.textContent = 'Скопировано — вставь в чат';
+    hint.className = 'hint ok';
+  }
 })();
 </script>
 </body>
