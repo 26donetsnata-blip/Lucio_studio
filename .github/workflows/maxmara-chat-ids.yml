@@ -1,0 +1,30 @@
+# Показывает ID чатов и групп, где бот получил сообщения (для настройки TELEGRAM_CHAT_ID).
+# Выводит только ID, тип и название чата — без токена и без текста сообщений.
+name: Max Mara → найти ID чатов
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "maxmara/find-chats.txt"
+
+jobs:
+  ids:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get chat IDs
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          curl -sS "https://api.telegram.org/bot${TOKEN}/getUpdates?allowed_updates=%5B%22message%22,%22my_chat_member%22,%22channel_post%22%5D" \
+          | python3 -c '
+          import json,sys
+          d=json.load(sys.stdin); seen={}
+          for u in d.get("result",[]):
+              for k in ("message","my_chat_member","channel_post","edited_message"):
+                  c=(u.get(k) or {}).get("chat")
+                  if c: seen[c["id"]]=(c.get("type"),c.get("title") or c.get("first_name") or "")
+          print("CHATS:", len(seen))
+          for i,(t,n) in seen.items(): print("CHAT", i, t, n)
+          '
