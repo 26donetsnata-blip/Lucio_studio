@@ -1,0 +1,21 @@
+# Обход it.intrend.it без Claude: собирает Max Mara, пересобирает таблицу и пушит её.
+name: Max Mara → обход Intrend
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe — только проверка, dry — обход без пуша, run — обход и пуш"
+        default: run
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe
+        if: inputs.mode == 'probe'
+        run: python3 maxmara/probe.py
