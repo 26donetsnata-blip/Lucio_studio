@@ -1,0 +1,35 @@
+# Отправляет итог обновления таблицы «Max Mara на Intrend» в Telegram.
+# Нужны секреты репозитория: TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID.
+name: Max Mara → Telegram
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maxmara/telegram.txt"
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # даём GitHub Pages время опубликовать новую версию страницы
+      - name: Wait for Pages deploy
+        run: sleep 120
+
+      - name: Send to Telegram
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TOKEN" ] || [ -z "$CHAT" ]; then
+            echo "Секреты TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID не заданы — пропускаю."
+            exit 0
+          fi
+          curl -sS -f "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${CHAT}" \
+            --data-urlencode "text@maxmara/telegram.txt" \
+            --data-urlencode "disable_web_page_preview=false" > /dev/null
+          echo "Отправлено."

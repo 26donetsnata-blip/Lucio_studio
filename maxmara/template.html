@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Max Mara на Intrend — находки</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF0EE;--surface:#FFF;--ink:#1F2326;--muted:#61686C;--line:#D6DAD7;--camel:#A9784A;--navy:#2E4A6B;--chip:#E2E6E3;--sale:#A3392F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#16191B;--surface:#1F2326;--ink:#ECEDEB;--muted:#A3A9AC;--line:#33393C;--camel:#D2A273;--navy:#8EAFD6;--chip:#2A2F32;--sale:#E58A80}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#16191B;--surface:#1F2326;--ink:#ECEDEB;--muted:#A3A9AC;--line:#33393C;--camel:#D2A273;--navy:#8EAFD6;--chip:#2A2F32;--sale:#E58A80}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,"Segoe UI",Arial,sans-serif;font-size:15px;line-height:1.45}
+.wrap{max-width:1140px;margin:0 auto;padding:28px 16px 48px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clamp(32px,7vw,48px);margin:0 0 6px;line-height:1.05}
+.lead{color:var(--muted);margin:0 0 18px;max-width:70ch}
+.stats{display:flex;gap:24px;flex-wrap:wrap;margin:0 0 18px;color:var(--muted);font-size:14px}
+.stats b{display:block;color:var(--ink);font-size:22px}
+.filters{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:14px;padding:6px 13px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:28px;margin:28px 0 8px}
+h2 small{font-family:Manrope,sans-serif;font-size:14px;color:var(--muted);font-weight:400}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.name a{font-weight:700;color:var(--ink);text-decoration:underline;text-decoration-color:var(--camel);text-underline-offset:3px}
+td.price{white-space:nowrap;text-align:right}
+td.price b{font-size:16px}
+.was{display:block;color:var(--muted);text-decoration:line-through;font-size:13px}
+.pct{display:inline-block;color:var(--sale);font-weight:700;font-size:12px}
+.ln{display:inline-block;padding:1px 8px;border-radius:4px;background:var(--chip);font-size:13px;white-space:nowrap}
+.ln.mm{color:var(--camel)}.ln.wk{color:var(--navy)}.ln.mr{color:var(--sale)}
+.tabs{border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:10px}.tabs .chip{font-weight:700;font-size:15px;padding:8px 16px}
+.cols{display:flex;flex-wrap:wrap;gap:6px}
+.cols a{font-size:13px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--ink);text-decoration:none;white-space:nowrap}
+.cols a:hover{border-color:var(--camel)}
+.st{font-size:13px;color:var(--muted)}.st.new{color:var(--camel);font-weight:700}.st.gone{color:var(--sale)}
+a:focus-visible,.chip:focus-visible{outline:2px solid var(--camel);outline-offset:2px}
+.howto{margin-top:36px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.howto h2{margin-top:0}
+footer{color:var(--muted);font-size:13px;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Max Mara на Intrend</h1>
+<p class="lead">Оригиналы Max Mara, Weekend Max Mara и Marina Rinaldi на it.intrend.it. Название открывает вещь на сайте, а кнопки цветов ведут на нужный цвет. Всё открывается в новой вкладке.</p>
+<div class="stats"><div><b id="s1"></b>моделей Max Mara</div><div><b id="s2"></b>моделей Weekend</div><div><b id="s4"></b>моделей Marina Rinaldi</div><div><b id="s3"></b>со скидкой</div><div><b>__DATE__</b>проверено</div></div>
+<div class="filters">
+<div class="row tabs" id="fb"></div>
+<div class="row" id="fc"></div>
+<div class="row" id="fl"></div>
+<div class="row" id="fs"></div>
+</div>
+<div id="out"></div>
+<div class="howto">
+<h2>Как проверить вещь самой</h2>
+<p>Код вещи есть в ссылке и на странице, в строке «CODICE PRODOTTO». Пример — пальто GANGE:</p>
+<p style="font-size:20px;letter-spacing:.04em"><b style="color:var(--camel)">1</b>0160252<b style="color:var(--camel)">06</b>001</p>
+<p>Первая цифра: 1 — Max Mara, 5 — Weekend Max Mara, 7 — Marina Rinaldi (у неё и размеры свои: 11, 13 … 33).<br>9-я и 10-я цифры: 06 — оригинал группы Max Mara, 05 — собственная линия Intrend.</p>
+</div>
+<footer>Обновляется каждый день около 16:00 (Москва). Просмотрены разделы: пальто, пуховики, свитера (кашемир и верблюжья шерсть), обувь, шарфы и платки, перчатки. Вещи с кодом на 2, 4 или 8 — оригиналы группы Max Mara, но точную линию по коду не определить. Размеры в наличии смотрите на сайте.</footer>
+</div>
+<script>
+const ITEMS=__DATA__;
+const CATS=[["all","Всё"],["Пальто","Пальто"],["Пуховики","Пуховики"],["Свитера","Свитера"],["Обувь","Обувь"],["Шарфы","Шарфы"],["Платки и палантины","Платки и палантины"],["Перчатки","Перчатки"]];
+const BRANDS=[["mmw","Max Mara и Weekend"],["mr","Marina Rinaldi"]];
+const LINES=[["all","Все линии"],["Max Mara","Max Mara"],["Weekend","Weekend"],["Другая линия группы","Другие линии группы"]];
+const SALES=[["all","Все цены"],["sale","Только со скидкой"],["new","Новые и подешевевшие"]];
+const TITLE={"Пальто":"Пальто","Пуховики":"Пуховики и утеплённые куртки","Свитера":"Свитера и кардиганы","Обувь":"Обувь","Шарфы":"Шарфы","Платки и палантины":"Платки и палантины","Перчатки":"Перчатки"};
+let st={brand:"mmw",cat:"all",line:"all",sale:"all"};
+try{const s=JSON.parse(localStorage.getItem("mmf2")||"null");if(s)st=Object.assign(st,s)}catch(e){}
+function chips(id,opts,k){const el=document.getElementById(id);el.innerHTML=opts.map(([v,t])=>`<button class="chip" data-v="${v}" aria-pressed="${st[k]===v}">${t}</button>`).join("");el.onclick=e=>{const b=e.target.closest(".chip");if(b){st[k]=b.dataset.v;try{localStorage.setItem("mmf2",JSON.stringify(st))}catch(_){ }render()}}}
+const cls=l=>l==="Max Mara"?"mm":l==="Weekend"?"wk":l==="Marina Rinaldi"?"mr":"";
+const eur=n=>"€"+n.toLocaleString("ru-RU");
+function row(i){
+ const pr=i.old?`<b>${eur(i.price)}</b><span class="was">${eur(i.old)}</span><span class="pct">−${Math.round(100-i.price*100/i.old)}%</span>`:`<b>${eur(i.price)}</b>`;
+ const sc=i.st==="Новая"?"st new":i.st.startsWith("Цена снизилась")?"st gone":"st";
+ return `<tr><td class="name"><a href="${i.vars[0].u}" target="_blank" rel="noopener">${i.name}</a></td>
+<td>${i.desc}</td>
+<td><span class="ln ${cls(i.line)}">${i.line}</span></td>
+<td><div class="cols">${i.vars.map(v=>`<a href="${v.u}" target="_blank" rel="noopener">${v.c}</a>`).join("")}</div></td>
+<td class="price">${pr}</td>
+<td><span class="${sc}">${i.st}</span></td></tr>`}
+function render(){chips("fb",BRANDS,"brand");chips("fc",CATS,"cat");chips("fl",LINES,"line");chips("fs",SALES,"sale");
+ document.getElementById("fl").style.display=st.brand==="mr"?"none":"flex";
+ const f=ITEMS.filter(i=>(st.brand==="mr"?i.line==="Marina Rinaldi":i.line!=="Marina Rinaldi"&&(st.line==="all"||i.line===st.line))&&(st.cat==="all"||i.cat===st.cat)&&(st.sale==="all"||(st.sale==="sale"?i.old>0:i.st!=="Была раньше")));
+ const cats=["Пальто","Пуховики","Свитера","Обувь","Шарфы","Платки и палантины","Перчатки"].filter(c=>f.some(i=>i.cat===c));
+ document.getElementById("out").innerHTML=cats.length?cats.map(c=>{const r=f.filter(i=>i.cat===c).sort((a,b)=>b.price-a.price);return `<h2>${TITLE[c]} <small>${r.length}</small></h2><div class="tbl"><table><thead><tr><th>Модель</th><th>Описание</th><th>Линия</th><th>Цвета — нажмите, чтобы открыть</th><th style="text-align:right">Цена</th><th>Статус</th></tr></thead><tbody>${r.map(row).join("")}</tbody></table></div>`}).join(""):'<p class="lead">В этом сочетании ничего нет.</p>'}
+document.getElementById("s1").textContent=ITEMS.filter(i=>i.line==="Max Mara").length;
+document.getElementById("s2").textContent=ITEMS.filter(i=>i.line==="Weekend").length;
+document.getElementById("s3").textContent=ITEMS.filter(i=>i.old>0).length;
+document.getElementById("s4").textContent=ITEMS.filter(i=>i.line==="Marina Rinaldi").length;
+render();
+</script>
+</body>
+</html>
