@@ -2,6 +2,10 @@
 name: Max Mara → обход Intrend
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "maxmara/scrape-mode.txt"
   workflow_dispatch:
     inputs:
       mode:
@@ -16,6 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Mode
+        id: m
+        run: echo "mode=${{ inputs.mode || '' }}" >> $GITHUB_OUTPUT; if [ -z "${{ inputs.mode }}" ]; then echo "mode=$(cat maxmara/scrape-mode.txt 2>/dev/null || echo run)" >> $GITHUB_OUTPUT; fi
       - name: Probe
-        if: inputs.mode == 'probe'
+        if: steps.m.outputs.mode == 'probe'
         run: python3 maxmara/probe.py
