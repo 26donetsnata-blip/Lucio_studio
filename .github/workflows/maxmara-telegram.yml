@@ -28,8 +28,16 @@ jobs:
             echo "Секреты TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID не заданы — пропускаю."
             exit 0
           fi
-          curl -sS -f "https://api.telegram.org/bot${TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${CHAT}" \
-            --data-urlencode "text@maxmara/telegram.txt" \
-            --data-urlencode "disable_web_page_preview=false" > /dev/null
-          echo "Отправлено."
+          # в TELEGRAM_CHAT_ID можно перечислить несколько адресов через запятую
+          ok=0; fail=0
+          for id in $(echo "$CHAT" | tr ',;' '  '); do
+            if curl -sS -f "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+                 --data-urlencode "chat_id=${id}" \
+                 --data-urlencode "text@maxmara/telegram.txt" > /dev/null; then
+              ok=$((ok+1))
+            else
+              fail=$((fail+1)); echo "Не удалось отправить на один из адресов (бот не запущен или не добавлен в группу)."
+            fi
+          done
+          echo "Отправлено: $ok, ошибок: $fail."
+          [ "$ok" -gt 0 ]
