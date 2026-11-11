@@ -1,68 +1,46 @@
 # Ежедневное обновление таблицы «Max Mara на Intrend»
 
-Цель: обойти it.intrend.it, собрать все оригиналы группы Max Mara, пересобрать
-страницу `maxmara/index.html` и запушить в `main`. После пуша GitHub сам
-опубликует страницу и отправит итог в Telegram (workflow `maxmara-telegram.yml`).
-Пиши всё по-русски.
+Сайт it.intrend.it не открывается из облака и с серверов GitHub — обход делается
+во **встроенном браузере Claude на Mac пользователя** (инструменты
+`mcp__remote-devices__Claude_Browser__*`; перед первым шагом загрузи навык
+built-in-browser). Всё остальное — в облачной копии репозитория. Пиши по-русски.
 
-## 1. Обход сайта
-Открывай страницы через WebFetch. На каждой странице каталога проси вывести
-ВСЕ карточки строкой `URL | название | цена | старая цена`. Листание:
-`?q=%3AtopRated&page=N` (первая страница — без параметра, затем page=1, 2, …),
-пока карточки не закончатся или не начнут повторяться.
+## 1. Подготовка
+Склонируй репозиторий (см. задание) и получи список известных кодов:
 
-| Категория в данных | Раздел |
-|---|---|
-| Пальто | https://it.intrend.it/cappotti-e-giacche/cappotti (≈18 стр.) |
-| Пуховики | https://it.intrend.it/cappotti-e-giacche/piumini-e-imbottiti (≈8 стр.) |
-| Свитера | https://it.intrend.it/abbigliamento/maglie-e-cardigan с фильтром кашемира: `?q=%3AtopRated%3AmaterialFilter%3Acachemire&page=N` (≈7 стр.) и страница `/abbigliamento/maglie-e-cardigan/materialFilter/cammello` |
-| Обувь | https://it.intrend.it/scarpe-e-accessori/stivali, /stivaletti, /scarpe-basse, /scarpe-con-tacco, /sneakers — первые 2 страницы каждого |
-| Шарфы / Платки и палантины | https://it.intrend.it/scarpe-e-accessori/sciarpe-e-foulard (≈13 стр.) и `/sciarpe-e-foulard/materialFilter/cachemire` |
-| Перчатки | https://it.intrend.it/scarpe-e-accessori/guanti-e-cappelli (≈21 стр.) — только перчатки (guanti), шапки пропускай |
-
-Если страница не открылась — повтори один раз, потом пропусти и запомни.
-Если не открылось больше половины разделов — НЕ пушь, а отправь в Telegram
-сообщение об ошибке (шаг 4, вариант Б).
-
-## 2. Что берём
-Код — 13 цифр после `/p-` в ссылке. Берём только если 9-я и 10-я цифры = `06`.
-`05` (линия Intrend) и `02` — не берём. Ссылки со slug на `v...` (например
-`p-4798…-vbraidy-…`) — дубли, пропускай, если есть такая же модель без `v`.
-
-Линия по 1-й цифре: `1` — "Max Mara", `5` — "Weekend", `7` — "Marina Rinaldi",
-остальные — "Другая линия группы".
-
-Шарфы и платки: если в названии foulard, stola, scialle, cappa, carré — категория
-"Платки и палантины", иначе "Шарфы".
-
-## 3. Сборка
-Запиши `maxmara/crawl.json` — список моделей (одна модель = одна запись, цвета
-в `vars`):
-
-```json
-{"cat": "Пальто", "name": "GANGE", "line": "Max Mara",
- "desc": "Пальто из двойного кашемира и верблюжьей шерсти",
- "price": 1750, "old": 0,
- "vars": [{"c": "бежевый", "u": "https://it.intrend.it/p-1016025206001-gange-beige"}]}
+```
+python3 -c "import json;it=json.load(open('maxmara/items.json'));print(json.dumps(sorted({v['u'].split('/p-')[1][:13] for i in it for v in i['vars']})))"
 ```
 
-- `name` — модель из slug заглавными буквами, без `1234` и без цвета.
-- `desc` — короткое описание по-русски (переведи итальянское название карточки).
-  Если модель уже есть в `maxmara/items.json` — возьми описание оттуда.
-- `price` / `old` — целые евро; `old` = 0, если скидки нет.
-- `c` — цвет по-русски (beige — бежевый, cammello — кэмел, nero — чёрный и т. д.).
+## 2. Обход в браузере на Mac
+1. `preview_start` с url `https://it.intrend.it/cappotti-e-giacche/cappotti`.
+2. `javascript_tool`: выполни ВЕСЬ текст файла `maxmara/scrape.js` (обход стартует в фоне).
+3. Раз в ~30 секунд проверяй `javascript_tool`: `await new Promise(r=>setTimeout(r,30000)); window.__mmStatus`
+   — пока не станет `"done"` (обычно 2–4 минуты; всего ~2700 карточек).
+4. `javascript_tool`: `__mmExport(<массив кодов из шага 1>)` — вернёт текст.
+   Сохрани его ДОСЛОВНО в `maxmara/raw.txt`.
 
-Затем: `python3 maxmara/build.py` — скрипт сравнит с прошлой версией, проставит
-статусы и создаст `index.html`, `items.json`, `telegram.txt`.
-`crawl.json` в git не добавляй.
-
-## 4. Публикация
-А. Всё хорошо: `git add maxmara/index.html maxmara/items.json maxmara/telegram.txt`,
-коммит «Max Mara на Intrend: обновление <дата>», `git push origin HEAD:main`.
-
-Б. Обход не удался: запиши в `maxmara/telegram.txt` строку
-«Max Mara на Intrend — <дата>: сегодня обновить не получилось (сайт не открылся).
+Если браузер недоступен (Mac выключен / приложение закрыто) или в `#STATS` всего
+меньше 1000 карточек — не обновляй таблицу: запиши в `maxmara/telegram.txt`
+«Max Mara на Intrend — <дата>: сегодня обновить не получилось (Mac был недоступен).
 Таблица со вчерашними данными: https://26donetsnata-blip.github.io/Lucio_studio/maxmara/»
 и запушь только этот файл.
 
-Не трогай другие папки репозитория.
+## 3. Переводы новых моделей
+Строки до `#KNOWN` — новые вещи: `cat|code|slug|итальянское название|цены`.
+Для каждой новой основы slug (часть до первого «-», например `bernini`) добавь в
+`maxmara/descs.json` запись `"bernini": ["Обувь", "BERNINI", "Кожаные сапоги со штрипкой"]`.
+Категории: Пальто, Пуховики, Свитера, Обувь, Шарфы, Платки и палантины, Перчатки.
+Название — заглавными, без цифр в конце; если slug начинается с лишней `v`
+(дубль, например `vcircus`), убери её. Описание — коротко по-русски.
+
+## 4. Сборка и публикация
+```
+python3 maxmara/merge.py      # создаёт crawl.json, подскажет, чего не хватает в descs.json
+python3 maxmara/build.py      # index.html, items.json, telegram.txt
+git add maxmara/index.html maxmara/items.json maxmara/telegram.txt
+git commit -m "Max Mara на Intrend: обновление <дата>"
+git push origin HEAD:main
+```
+После пуша GitHub сам опубликует страницу и отправит итог в Telegram.
+Не трогай другие папки репозитория. Ничего не покупай и не входи в аккаунты на сайте.
