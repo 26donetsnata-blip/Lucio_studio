@@ -22,12 +22,12 @@ SITE = "https://26donetsnata-blip.github.io/Lucio_studio/maxmara/"
 SETS = {
     "outer": {"dir": D, "url": SITE, "items": "items.json",
               "cats": ["Пальто", "Пуховики", "Сапоги", "Перчатки", "Шарфы", "Платки и палантины"],
-              "h1": "Max Mara на Intrend", "sub": "Верхняя одежда: пальто, пуховики, сапоги, перчатки, шарфы и платки.",
-              "other": ("odezhda/", "Одежда и аксессуары →")},
+              "h1": "Max Mara на Intrend: зима", "sub": "Пальто, пуховики, сапоги и ботильоны, перчатки, шарфы и платки.",
+              "other": ("odezhda/", "Гардероб: свитера, платья, брюки и другое →")},
     "rest": {"dir": os.path.join(D, "odezhda"), "url": SITE + "odezhda/", "items": "items.json",
              "cats": ["Свитера", "Платья", "Пиджаки", "Юбки", "Брюки", "Обувь", "Сумки", "Аксессуары"],
-             "h1": "Max Mara на Intrend: одежда", "sub": "Свитера, платья, пиджаки, юбки, брюки, обувь, сумки и аксессуары.",
-             "other": ("../", "← Верхняя одежда")},
+             "h1": "Max Mara на Intrend: гардероб", "sub": "Свитера, платья, пиджаки, юбки, брюки, обувь, сумки и аксессуары.",
+             "other": ("../", "← Зима: пальто, пуховики, сапоги")},
 }
 ALL_CATS = SETS["outer"]["cats"] + SETS["rest"]["cats"]
 
@@ -247,29 +247,61 @@ def build(rows, which):
             "droplist": [m for m in models if m["st"].startswith("Цена")][:8]}
 
 
+def plural(n, one, few, many):
+    n10, n100 = n % 10, n % 100
+    if n10 == 1 and n100 != 11:
+        return f"{n} {one}"
+    if 2 <= n10 <= 4 and not 12 <= n100 <= 14:
+        return f"{n} {few}"
+    return f"{n} {many}"
+
+
 def telegram(results):
+    """Короткое понятное сообщение: дата подборки и две ссылки с пояснением."""
     today = datetime.now(timezone(timedelta(hours=3))).strftime("%d.%m.%Y")
-    out = [f"Max Mara на Intrend — {today}"]
-    title = {"outer": "Верхняя одежда (пальто, пуховики, сапоги, перчатки, шарфы)", "rest": "Одежда и аксессуары"}
+    head = {"outer": ("❄️ Зима", "пальто, пуховики, сапоги и ботильоны, перчатки, шарфы и платки"),
+            "rest": ("👗 Гардероб", "свитера и кардиганы, платья, пиджаки, юбки, брюки, обувь, сумки и аксессуары")}
+    out = [f"Сделана подборка Max Mara на Intrend на {today}"]
     for r in results:
-        L = r["lines"]
-        out += ["", title[r["which"]] + f": {r['models']} моделей",
-                f"Max Mara {L['Max Mara']} · Weekend {L['Weekend']} · Marina Rinaldi {L['Marina Rinaldi']} · "
-                f"Sportmax {L['Sportmax']} · 'S {L[chr(39) + 'S Max Mara / The Cube']} · Marella {L['Marella']} · Max&Co {L['Max&Co']}",
-                f"Новых: {r['new']} · подешевели: {r['drop']} · пропали: {r['gone']}"]
-        for m in r["newlist"]:
-            out.append(f"• {m['name']} ({m['line']}) — {m['cat'].lower()}, €{m['price']}")
-        for m in r["droplist"]:
-            out.append(f"↓ {m['name']} — €{m['price']} ({m['st'].split(': ')[1]})")
-        out.append(r["url"])
+        t, what = head[r["which"]]
+        extra = []
+        if r["new"]:
+            extra.append("новинок — " + str(r["new"]))
+        if r["drop"]:
+            extra.append("подешевело — " + str(r["drop"]))
+        line2 = plural(r["models"], "модель", "модели", "моделей") + (", " + ", ".join(extra) if extra else "")
+        out += ["", f"{t} — {what}.", line2, r["url"]]
+    out += ["", "В каждой подборке есть вкладки по маркам: Max Mara и Weekend, Marina Rinaldi, Sportmax, 'S Max Mara, Marella, Max&Co. "
+            "Нажмите на название вещи — откроется её страница на сайте."]
     return "\n".join(out) + "\n"
 
 
+def summary():
+    """Итог по обеим подборкам из сохранённых items.json — для общего сообщения."""
+    res = []
+    for w in ("outer", "rest"):
+        try:
+            d = json.load(open(os.path.join(SETS[w]["dir"], SETS[w]["items"]), encoding="utf-8"))
+        except FileNotFoundError:
+            continue
+        res.append({"which": w, "models": len(d), "url": SETS[w]["url"],
+                    "new": sum(i["st"] == "Новая" for i in d),
+                    "drop": sum(i["st"].startswith("Цена") for i in d)})
+    return res
+
+
 if __name__ == "__main__":
+    # Подборка rest собирается первой и сообщение не пишет; outer (или all) пишет одно общее
+    # сообщение с двумя ссылками — так в Telegram приходит одно письмо в неделю.
     path, which = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else "all")
     rows = parse(path)
     assert len(rows) > 500, f"Слишком мало строк в выгрузке: {len(rows)}"
-    res = [build(rows, w) for w in (["outer", "rest"] if which == "all" else [which])]
-    txt = telegram(res)
-    open(os.path.join(D, "telegram.txt"), "w", encoding="utf-8").write(txt)
-    print(txt)
+    for w in (["outer", "rest"] if which == "all" else [which]):
+        r = build(rows, w)
+        print(f"{w}: {r['models']} моделей, новых {r['new']}, подешевели {r['drop']}, пропали {r['gone']}")
+    if which != "rest":
+        txt = telegram(summary())
+        open(os.path.join(D, "telegram.txt"), "w", encoding="utf-8").write(txt)
+        print(txt)
+    else:
+        print("Сообщение в Telegram отправит задача outer (она запускается после rest).")
