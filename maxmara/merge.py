@@ -27,7 +27,11 @@ COL = {"beige": "бежевый", "cammello": "кэмел", "marrone": "кори
 
 
 def line(code):
-    return {"1": "Max Mara", "5": "Weekend", "7": "Marina Rinaldi"}.get(code[0], "Другая линия группы")
+    d, x = code[0], code[8:10]
+    if x == "02":
+        return {"3": "Marella", "6": "Max&Co"}.get(d, "Другая линия группы")
+    return {"1": "Max Mara", "5": "Weekend", "7": "Marina Rinaldi", "2": "Sportmax",
+            "9": "'S Max Mara / The Cube"}.get(d, "Другая линия группы")
 
 
 def prices(p):

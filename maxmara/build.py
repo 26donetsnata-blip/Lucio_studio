@@ -15,7 +15,7 @@ from datetime import datetime, timedelta, timezone
 
 D = os.path.dirname(os.path.abspath(__file__))
 URL = "https://26donetsnata-blip.github.io/Lucio_studio/maxmara/"
-LINES = {"Max Mara", "Weekend", "Marina Rinaldi", "Другая линия группы"}
+LINES = {"Max Mara", "Weekend", "Marina Rinaldi", "Sportmax", "'S Max Mara / The Cube", "Marella", "Max&Co", "Другая линия группы"}
 CATS = ["Пальто", "Пуховики", "Свитера", "Обувь", "Шарфы", "Платки и палантины", "Перчатки"]
 
 
@@ -68,7 +68,9 @@ def main():
         "",
         f"Всего моделей: {len(out)} (Max Mara {sum(i['line']=='Max Mara' for i in out)}, "
         f"Weekend {sum(i['line']=='Weekend' for i in out)}, "
-        f"Marina Rinaldi {sum(i['line']=='Marina Rinaldi' for i in out)})",
+        f"Marina Rinaldi {sum(i['line']=='Marina Rinaldi' for i in out)}, "
+        f"Marella {sum(i['line']=='Marella' for i in out)}, "
+        f"Max&Co {sum(i['line']=='Max&Co' for i in out)})",
         f"Новых: {len(n_new)} · подешевели: {len(n_drop)} · пропали: {len(gone)}",
     ]
     if n_new:

@@ -48,7 +48,7 @@ footer{color:var(--muted);font-size:13px;margin-top:22px}
 <body>
 <div class="wrap">
 <h1>Max Mara на Intrend</h1>
-<p class="lead">Оригиналы Max Mara, Weekend Max Mara и Marina Rinaldi на it.intrend.it. Название открывает вещь на сайте, а кнопки цветов ведут на нужный цвет. Всё открывается в новой вкладке.</p>
+<p class="lead">Оригиналы Max Mara и других марок группы — Weekend, Marina Rinaldi, Sportmax, 'S Max Mara, Marella, Max&amp;Co — на it.intrend.it. Название открывает вещь на сайте, а кнопки цветов ведут на нужный цвет. Всё открывается в новой вкладке.</p>
 <div class="stats"><div><b id="s1"></b>моделей Max Mara</div><div><b id="s2"></b>моделей Weekend</div><div><b id="s4"></b>моделей Marina Rinaldi</div><div><b id="s3"></b>со скидкой</div><div><b>__DATE__</b>проверено</div></div>
 <div class="filters">
 <div class="row tabs" id="fb"></div>
@@ -61,21 +61,23 @@ footer{color:var(--muted);font-size:13px;margin-top:22px}
 <h2>Как проверить вещь самой</h2>
 <p>Код вещи есть в ссылке и на странице, в строке «CODICE PRODOTTO». Пример — пальто GANGE:</p>
 <p style="font-size:20px;letter-spacing:.04em"><b style="color:var(--camel)">1</b>0160252<b style="color:var(--camel)">06</b>001</p>
-<p>Первая цифра: 1 — Max Mara, 5 — Weekend Max Mara, 7 — Marina Rinaldi (у неё и размеры свои: 11, 13 … 33).<br>9-я и 10-я цифры: 06 — оригинал группы Max Mara, 05 — собственная линия Intrend.</p>
+<p>Первая цифра: 1 — Max Mara, 5 — Weekend Max Mara, 7 — Marina Rinaldi (у неё и размеры свои: 11, 13 … 33), 2 — Sportmax, 9 — 'S Max Mara / The Cube. У Marella (3) и Max&amp;Co (6) на 9–10 местах стоит 02.<br>9-я и 10-я цифры: 06 — оригинал группы Max Mara, 05 — собственная линия Intrend.</p>
 </div>
 <footer>Обновляется каждый день около 16:00 (Москва). Просмотрены разделы: пальто, пуховики, свитера (кашемир и верблюжья шерсть), обувь, шарфы и платки, перчатки. Вещи с кодом на 2, 4 или 8 — оригиналы группы Max Mara, но точную линию по коду не определить. Размеры в наличии смотрите на сайте.</footer>
 </div>
 <script>
 const ITEMS=__DATA__;
 const CATS=[["all","Всё"],["Пальто","Пальто"],["Пуховики","Пуховики"],["Свитера","Свитера"],["Обувь","Обувь"],["Шарфы","Шарфы"],["Платки и палантины","Платки и палантины"],["Перчатки","Перчатки"]];
-const BRANDS=[["mmw","Max Mara и Weekend"],["mr","Marina Rinaldi"]];
-const LINES=[["all","Все линии"],["Max Mara","Max Mara"],["Weekend","Weekend"],["Другая линия группы","Другие линии группы"]];
+const BRANDS=[["mmw","Max Mara и Weekend"],["mr","Marina Rinaldi"],["sp","Sportmax"],["s","'S Max Mara / The Cube"],["ml","Marella"],["mc","Max&Co"],["ot","Другие линии"]];
+const BLINE={mr:"Marina Rinaldi",sp:"Sportmax",s:"'S Max Mara / The Cube",ml:"Marella",mc:"Max&Co",ot:"Другая линия группы"};
+const LINES=[["all","Max Mara и Weekend"],["Max Mara","Только Max Mara"],["Weekend","Только Weekend"]];
 const SALES=[["all","Все цены"],["sale","Только со скидкой"],["new","Новые и подешевевшие"]];
 const TITLE={"Пальто":"Пальто","Пуховики":"Пуховики и утеплённые куртки","Свитера":"Свитера и кардиганы","Обувь":"Обувь","Шарфы":"Шарфы","Платки и палантины":"Платки и палантины","Перчатки":"Перчатки"};
 let st={brand:"mmw",cat:"all",line:"all",sale:"all"};
 try{const s=JSON.parse(localStorage.getItem("mmf2")||"null");if(s)st=Object.assign(st,s)}catch(e){}
 function chips(id,opts,k){const el=document.getElementById(id);el.innerHTML=opts.map(([v,t])=>`<button class="chip" data-v="${v}" aria-pressed="${st[k]===v}">${t}</button>`).join("");el.onclick=e=>{const b=e.target.closest(".chip");if(b){st[k]=b.dataset.v;try{localStorage.setItem("mmf2",JSON.stringify(st))}catch(_){ }render()}}}
 const cls=l=>l==="Max Mara"?"mm":l==="Weekend"?"wk":l==="Marina Rinaldi"?"mr":"";
+if(!BRANDS.some(b=>b[0]===st.brand))st.brand="mmw"; if(!LINES.some(b=>b[0]===st.line))st.line="all";
 const eur=n=>"€"+n.toLocaleString("ru-RU");
 function row(i){
  const pr=i.old?`<b>${eur(i.price)}</b><span class="was">${eur(i.old)}</span><span class="pct">−${Math.round(100-i.price*100/i.old)}%</span>`:`<b>${eur(i.price)}</b>`;
@@ -87,10 +89,10 @@ function row(i){
 <td class="price">${pr}</td>
 <td><span class="${sc}">${i.st}</span></td></tr>`}
 function render(){chips("fb",BRANDS,"brand");chips("fc",CATS,"cat");chips("fl",LINES,"line");chips("fs",SALES,"sale");
- document.getElementById("fl").style.display=st.brand==="mr"?"none":"flex";
- const f=ITEMS.filter(i=>(st.brand==="mr"?i.line==="Marina Rinaldi":i.line!=="Marina Rinaldi"&&(st.line==="all"||i.line===st.line))&&(st.cat==="all"||i.cat===st.cat)&&(st.sale==="all"||(st.sale==="sale"?i.old>0:i.st!=="Была раньше")));
+ document.getElementById("fl").style.display=st.brand==="mmw"?"flex":"none";
+ const f=ITEMS.filter(i=>(st.brand==="mmw"?((i.line==="Max Mara"||i.line==="Weekend")&&(st.line==="all"||i.line===st.line)):i.line===BLINE[st.brand])&&(st.cat==="all"||i.cat===st.cat)&&(st.sale==="all"||(st.sale==="sale"?i.old>0:i.st!=="Была раньше")));
  const cats=["Пальто","Пуховики","Свитера","Обувь","Шарфы","Платки и палантины","Перчатки"].filter(c=>f.some(i=>i.cat===c));
- document.getElementById("out").innerHTML=cats.length?cats.map(c=>{const r=f.filter(i=>i.cat===c).sort((a,b)=>b.price-a.price);return `<h2>${TITLE[c]} <small>${r.length}</small></h2><div class="tbl"><table><thead><tr><th>Модель</th><th>Описание</th><th>Линия</th><th>Цвета — нажмите, чтобы открыть</th><th style="text-align:right">Цена</th><th>Статус</th></tr></thead><tbody>${r.map(row).join("")}</tbody></table></div>`}).join(""):'<p class="lead">В этом сочетании ничего нет.</p>'}
+ document.getElementById("out").innerHTML=cats.length?cats.map(c=>{const r=f.filter(i=>i.cat===c).sort((a,b)=>b.price-a.price);return `<h2>${TITLE[c]} <small>${r.length}</small></h2><div class="tbl"><table><thead><tr><th>Модель</th><th>Описание</th><th>Линия</th><th>Цвета — нажмите, чтобы открыть</th><th style="text-align:right">Цена</th><th>Статус</th></tr></thead><tbody>${r.map(row).join("")}</tbody></table></div>`}).join(""):'<p class="lead">'+((st.brand==="ml"||st.brand==="mc")&&!ITEMS.some(i=>i.line===BLINE[st.brand])?'Вещи этой марки появятся после ближайшего ежедневного обновления.':'В этом сочетании ничего нет.')+'</p>'}
 document.getElementById("s1").textContent=ITEMS.filter(i=>i.line==="Max Mara").length;
 document.getElementById("s2").textContent=ITEMS.filter(i=>i.line==="Weekend").length;
 document.getElementById("s3").textContent=ITEMS.filter(i=>i.old>0).length;

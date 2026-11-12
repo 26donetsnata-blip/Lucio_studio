@@ -48,12 +48,14 @@
     }
     window.__mmStatus = 'done';
   })();
-  // Оригиналы группы Max Mara: 9-я и 10-я цифры кода = 06. Перчатки: только guanti.
+  // Оригиналы группы: 06 (Max Mara и её линии) или 02 у Marella/Max&Co. Перчатки: только guanti.
   window.__mmExport = (known) => {
     const K = new Set(known), seen = new Set();
-    const o = window.__mm.filter(x => x.code.slice(8, 10) === '06' && (x.cat !== 'G' || /guant/i.test(x.it))
+    // 06 — линии Max Mara; 02 у кодов на 3 (Marella) и 6 (Max&Co)
+    const orig = x => x.code.slice(8, 10) === '06' || (x.code.slice(8, 10) === '02' && '36'.includes(x.code[0]));
+    const o = window.__mm.filter(x => orig(x) && (x.cat !== 'G' || /guant/i.test(x.it))
       && !seen.has(x.code) && seen.add(x.code));
-    const neu = o.filter(x => !K.has(x.code) && ('157'.includes(x.code[0]) || 'SAG'.includes(x.cat)));
+    const neu = o.filter(x => !K.has(x.code) && ('1572936'.includes(x.code[0]) || 'SAG'.includes(x.cat)));
     const kn = o.filter(x => K.has(x.code));
     return neu.map(x => [x.cat, x.code, x.slug, x.it, x.prices.join('/')].join('|')).join('\n')
       + '\n#KNOWN\n' + kn.map(x => x.code + ':' + x.prices.join('/')).join(' ')
