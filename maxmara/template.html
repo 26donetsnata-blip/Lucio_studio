@@ -63,21 +63,22 @@ footer{color:var(--muted);font-size:13px;margin-top:22px}
 <p style="font-size:20px;letter-spacing:.04em"><b style="color:var(--camel)">1</b>0160252<b style="color:var(--camel)">06</b>001</p>
 <p>Первая цифра: 1 — Max Mara, 5 — Weekend Max Mara, 7 — Marina Rinaldi (у неё и размеры свои: 11, 13 … 33), 2 — Sportmax, 9 — 'S Max Mara / The Cube. У Marella (3) и Max&amp;Co (6) на 9–10 местах стоит 02.<br>9-я и 10-я цифры: 06 — оригинал группы Max Mara, 05 — собственная линия Intrend.</p>
 </div>
-<footer>Обновляется раз в неделю и по запросу. Просмотрены разделы: пальто, пуховики, свитера (кашемир и верблюжья шерсть), платья, пиджаки, юбки, брюки, обувь, сумки, шарфы и платки, перчатки, аксессуары. Марку определяет первая цифра кода. Marella с кодом «3…06» — вещи, сделанные для аутлета. Размеры в наличии смотрите на сайте.</footer>
+<footer>Обновляется раз в неделю и по запросу. Марку определяет первая цифра кода (1 — Max Mara, 2 — Sportmax, 3 — Marella, 5 — Weekend, 6 — Max&amp;Co, 7 — Marina Rinaldi, 9 — 'S Max Mara / The Cube). Описания новых моделей переведены автоматически. Размеры в наличии смотрите на сайте.</footer>
 </div>
 <script>
 const ITEMS=__DATA__;
-const CATS=[["all","Всё"],["Пальто","Пальто"],["Пуховики","Пуховики"],["Свитера","Свитера"],["Платья","Платья"],["Пиджаки","Пиджаки"],["Юбки","Юбки"],["Брюки","Брюки"],["Обувь","Обувь"],["Сумки","Сумки"],["Шарфы","Шарфы"],["Платки и палантины","Платки и палантины"],["Перчатки","Перчатки"],["Аксессуары","Аксессуары"]];
+const CATLIST=__CATLIST__;
+const CATS=[["all","Всё"]].concat(CATLIST.map(c=>[c,c]));
 const BRANDS=[["mmw","Max Mara и Weekend"],["mr","Marina Rinaldi"],["sp","Sportmax"],["s","'S Max Mara / The Cube"],["ml","Marella"],["mc","Max&Co"],["ot","Другие линии"]];
 const BLINE={mr:"Marina Rinaldi",sp:"Sportmax",s:"'S Max Mara / The Cube",ml:"Marella",mc:"Max&Co",ot:"Другая линия группы"};
 const LINES=[["all","Max Mara и Weekend"],["Max Mara","Только Max Mara"],["Weekend","Только Weekend"]];
 const SALES=[["all","Все цены"],["sale","Только со скидкой"],["new","Новые и подешевевшие"]];
-const TITLE={"Пальто":"Пальто","Пуховики":"Пуховики и утеплённые куртки","Свитера":"Свитера и кардиганы","Платья":"Платья","Пиджаки":"Пиджаки и жакеты","Юбки":"Юбки","Брюки":"Брюки","Обувь":"Обувь","Сумки":"Сумки","Шарфы":"Шарфы","Платки и палантины":"Платки и палантины","Перчатки":"Перчатки","Аксессуары":"Аксессуары"};
+const TITLE={"Пальто":"Пальто","Пуховики":"Пуховики и утеплённые куртки","Свитера":"Свитера и кардиганы","Платья":"Платья","Пиджаки":"Пиджаки и жакеты","Юбки":"Юбки","Брюки":"Брюки","Обувь":"Обувь","Сумки":"Сумки","Шарфы":"Шарфы","Платки и палантины":"Платки и палантины","Перчатки":"Перчатки","Сапоги":"Сапоги и ботильоны","Аксессуары":"Аксессуары"};
 let st={brand:"mmw",cat:"all",line:"all",sale:"all"};
 try{const s=JSON.parse(localStorage.getItem("mmf2")||"null");if(s)st=Object.assign(st,s)}catch(e){}
 function chips(id,opts,k){const el=document.getElementById(id);el.innerHTML=opts.map(([v,t])=>`<button class="chip" data-v="${v}" aria-pressed="${st[k]===v}">${t}</button>`).join("");el.onclick=e=>{const b=e.target.closest(".chip");if(b){st[k]=b.dataset.v;try{localStorage.setItem("mmf2",JSON.stringify(st))}catch(_){ }render()}}}
 const cls=l=>l==="Max Mara"?"mm":l==="Weekend"?"wk":l==="Marina Rinaldi"?"mr":"";
-if(!BRANDS.some(b=>b[0]===st.brand))st.brand="mmw"; if(!LINES.some(b=>b[0]===st.line))st.line="all";
+if(!BRANDS.some(b=>b[0]===st.brand))st.brand="mmw"; if(!CATS.some(b=>b[0]===st.cat))st.cat="all"; if(!LINES.some(b=>b[0]===st.line))st.line="all";
 const eur=n=>"€"+n.toLocaleString("ru-RU");
 function row(i){
  const pr=i.old?`<b>${eur(i.price)}</b><span class="was">${eur(i.old)}</span><span class="pct">−${Math.round(100-i.price*100/i.old)}%</span>`:`<b>${eur(i.price)}</b>`;
@@ -91,7 +92,7 @@ function row(i){
 function render(){chips("fb",BRANDS,"brand");chips("fc",CATS,"cat");chips("fl",LINES,"line");chips("fs",SALES,"sale");
  document.getElementById("fl").style.display=st.brand==="mmw"?"flex":"none";
  const f=ITEMS.filter(i=>(st.brand==="mmw"?((i.line==="Max Mara"||i.line==="Weekend")&&(st.line==="all"||i.line===st.line)):i.line===BLINE[st.brand])&&(st.cat==="all"||i.cat===st.cat)&&(st.sale==="all"||(st.sale==="sale"?i.old>0:i.st!=="Была раньше")));
- const cats=["Пальто","Пуховики","Свитера","Платья","Пиджаки","Юбки","Брюки","Обувь","Сумки","Шарфы","Платки и палантины","Перчатки","Аксессуары"].filter(c=>f.some(i=>i.cat===c));
+ const cats=CATLIST.filter(c=>f.some(i=>i.cat===c));
  document.getElementById("out").innerHTML=cats.length?cats.map(c=>{const r=f.filter(i=>i.cat===c).sort((a,b)=>b.price-a.price);return `<h2>${TITLE[c]} <small>${r.length}</small></h2><div class="tbl"><table><thead><tr><th>Модель</th><th>Описание</th><th>Линия</th><th>Цвета — нажмите, чтобы открыть</th><th style="text-align:right">Цена</th><th>Статус</th></tr></thead><tbody>${r.map(row).join("")}</tbody></table></div>`}).join(""):'<p class="lead">'+((st.brand==="ml"||st.brand==="mc")&&!ITEMS.some(i=>i.line===BLINE[st.brand])?'Вещи этой марки появятся после ближайшего ежедневного обновления.':'В этом сочетании ничего нет.')+'</p>'}
 document.getElementById("s1").textContent=ITEMS.filter(i=>i.line==="Max Mara").length;
 document.getElementById("s2").textContent=ITEMS.filter(i=>i.line==="Weekend").length;
