@@ -1,0 +1,13 @@
+{
+  "name": "Питание",
+  "short_name": "Питание",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#F7F2E8",
+  "theme_color": "#284C3A",
+  "lang": "ru",
+  "icons": [
+    { "src": "assets/exercises/03-butterfly.jpg", "sizes": "470x425", "type": "image/jpeg" }
+  ]
+}

@@ -5,6 +5,7 @@
 #   /         — приложение по питанию (nutrition-app), как было раньше
 #   /gotovo/  — «Готово», превью приложения «что приготовить по фото»
 #   /maxmara/ — таблица оригиналов Max Mara и Weekend на Intrend
+#   /pitanie/ — приложение по программе метаболического похудения
 #
 # Папка gotovo/ — это уже собранные статические файлы. Исходники «Готово»
 # живут отдельно (~/Готово), сюда кладётся только результат сборки, потому
@@ -21,6 +22,7 @@ on:
       - "nutrition-app/**"
       - "gotovo/**"
       - "maxmara/**"
+      - "pitanie/**"
       - ".github/workflows/deploy-nutrition-app.yml"
   workflow_dispatch:
 
@@ -57,6 +59,11 @@ jobs:
           if [ -d maxmara ]; then
             mkdir -p _site/maxmara
             cp -R maxmara/. _site/maxmara/
+          fi
+          # приложение по питанию (программа метаболического похудения)
+          if [ -d pitanie ]; then
+            mkdir -p _site/pitanie
+            cp -R pitanie/. _site/pitanie/
           fi
           # Без этого файла GitHub прогоняет сайт через Jekyll, а тот
           # выбрасывает всё, что начинается с подчёркивания — в том числе
