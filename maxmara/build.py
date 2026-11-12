@@ -16,7 +16,7 @@ from datetime import datetime, timedelta, timezone
 D = os.path.dirname(os.path.abspath(__file__))
 URL = "https://26donetsnata-blip.github.io/Lucio_studio/maxmara/"
 LINES = {"Max Mara", "Weekend", "Marina Rinaldi", "Sportmax", "'S Max Mara / The Cube", "Marella", "Max&Co", "Другая линия группы"}
-CATS = ["Пальто", "Пуховики", "Свитера", "Обувь", "Шарфы", "Платки и палантины", "Перчатки"]
+CATS = ["Пальто", "Пуховики", "Свитера", "Платья", "Пиджаки", "Юбки", "Брюки", "Обувь", "Сумки", "Шарфы", "Платки и палантины", "Перчатки", "Аксессуары"]
 
 
 def key(i):

@@ -16,6 +16,16 @@
     ['S', B + 'scarpe-e-accessori/sneakers'],
     ['A', B + 'scarpe-e-accessori/sciarpe-e-foulard'],
     ['G', B + 'scarpe-e-accessori/guanti-e-cappelli'],
+    ['V', B + 'abbigliamento/abiti'],
+    ['J', B + 'cappotti-e-giacche/giacche-e-blazer'],
+    ['J', B + 'abbigliamento/tailleur'],
+    ['R', B + 'abbigliamento/gonne'],
+    ['T', B + 'abbigliamento/pantaloni'],
+    ['B', B + 'scarpe-e-accessori/borse'],
+    ['X', B + 'scarpe-e-accessori/accessori'],
+    ['X', B + 'scarpe-e-accessori/cinture'],
+    ['X', B + 'scarpe-e-accessori/occhiali-da-sole'],
+    ['X', B + 'scarpe-e-accessori/bigiotteria'],
   ];
   async function scrape(cat, base, q) {
     const out = [], seen = new Set();
@@ -48,14 +58,15 @@
     }
     window.__mmStatus = 'done';
   })();
-  // Оригиналы группы: 06 (Max Mara и её линии) или 02 у Marella/Max&Co. Перчатки: только guanti.
+  // Оригиналы группы: 9–10 цифры кода = 06 или (у Marella/Max&Co, 1-я цифра 3 или 6) 02. 05 — линия Intrend, не берём.
+  // Шапки из раздела guanti-e-cappelli уходят в «Аксессуары» (X), перчатки — в «Перчатки» (G).
   window.__mmExport = (known) => {
     const K = new Set(known), seen = new Set();
     // 06 — линии Max Mara; 02 у кодов на 3 (Marella) и 6 (Max&Co)
     const orig = x => x.code.slice(8, 10) === '06' || (x.code.slice(8, 10) === '02' && '36'.includes(x.code[0]));
-    const o = window.__mm.filter(x => orig(x) && (x.cat !== 'G' || /guant/i.test(x.it))
-      && !seen.has(x.code) && seen.add(x.code));
-    const neu = o.filter(x => !K.has(x.code) && ('1572936'.includes(x.code[0]) || 'SAG'.includes(x.cat)));
+    window.__mm.forEach(x => { if (x.cat === 'G' && !/guant/i.test(x.it)) x.cat = 'X'; });
+    const o = window.__mm.filter(x => orig(x) && !seen.has(x.code) && seen.add(x.code));
+    const neu = o.filter(x => !K.has(x.code) && ('1572936'.includes(x.code[0]) || 'SAGBX'.includes(x.cat)));
     const kn = o.filter(x => K.has(x.code));
     return neu.map(x => [x.cat, x.code, x.slug, x.it, x.prices.join('/')].join('|')).join('\n')
       + '\n#KNOWN\n' + kn.map(x => x.code + ':' + x.prices.join('/')).join(' ')
