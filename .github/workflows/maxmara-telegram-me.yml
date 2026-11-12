@@ -1,0 +1,25 @@
+# Личное сообщение владельцу (только на первый адрес из TELEGRAM_CHAT_ID), без группы.
+name: Max Mara → Telegram (лично)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maxmara/telegram-me.txt"
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send to owner only
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          me=$(echo "$CHAT" | tr ',;' '  ' | awk '{print $1}')
+          curl -sS -f "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${me}" \
+            --data-urlencode "text@maxmara/telegram-me.txt" > /dev/null
+          echo "Отправлено лично."

@@ -1,0 +1,11 @@
+Моя корзина Intrend — проверка 12.11.2026
+
+Проверено 20 вещей на €1 913:
+✓ Оригиналы — 4: PITONE, SASIA, KIKU (Weekend), ELIANE ('S Max Mara)
+≈ Похоже на Max Mara — 1: свитер с коротким рукавом, кэмел (логотип MaxMara)
+◇ Другие марки группы — 4: TANIA (Marella), YORO (Max&Co), QUIETO и ADIGE (линия на «3»; у ADIGE 50% акрила)
+✕ Линия Intrend — 1: GINETTA (код на 1, но 05)
+? Нужен код — 10. Последние в размере: синий жакет, слингбэки «под змею», зелёные балетки.
+
+Таблица с фото (открывается под вашим входом в Claude):
+https://claude.ai/artifact/5P6RN6twLXDeLH8UQyzxRt
